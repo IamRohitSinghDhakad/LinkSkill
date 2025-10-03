@@ -9,6 +9,13 @@ import UIKit
 
 class SignUpViewController: UIViewController {
 
+    @IBOutlet weak var tfUserName: UITextField!
+    @IBOutlet weak var tfEmail: UITextField!
+    @IBOutlet weak var tfMobile: UITextField!
+    @IBOutlet weak var tfPassword: UITextField!
+    @IBOutlet weak var tfAddress: UITextField!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -16,14 +23,12 @@ class SignUpViewController: UIViewController {
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @IBAction func btnOnBack(_ sender: Any) {
+        self.onBackPressed()
     }
-    */
+    
 
+    @IBAction func btnOnRegister(_ sender: Any) {
+        
+    }
 }
