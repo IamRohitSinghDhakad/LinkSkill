@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		7E8DA91A2E8FA21C00D22819 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 7E8DA9192E8FA21C00D22819 /* Alamofire */; };
+		7ECEE9342E8FC09900313C7C /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 7ECEE9332E8FC09900313C7C /* FirebaseCore */; };
+		7ECEE9362E8FC09900313C7C /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 7ECEE9352E8FC09900313C7C /* FirebaseMessaging */; };
+		7ECEE9392E8FC0B100313C7C /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7ECEE9382E8FC0B100313C7C /* IQKeyboardManagerSwift */; };
+		7ECEE93C2E8FC0C300313C7C /* SVProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 7ECEE93B2E8FC0C300313C7C /* SVProgressHUD */; };
+		7ECEE93F2E8FC0D700313C7C /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 7ECEE93E2E8FC0D700313C7C /* SDWebImage */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +45,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7ECEE93F2E8FC0D700313C7C /* SDWebImage in Frameworks */,
+				7ECEE9362E8FC09900313C7C /* FirebaseMessaging in Frameworks */,
+				7ECEE93C2E8FC0C300313C7C /* SVProgressHUD in Frameworks */,
+				7ECEE9392E8FC0B100313C7C /* IQKeyboardManagerSwift in Frameworks */,
+				7ECEE9342E8FC09900313C7C /* FirebaseCore in Frameworks */,
 				7E8DA91A2E8FA21C00D22819 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -84,6 +94,11 @@
 			name = LinkSkill;
 			packageProductDependencies = (
 				7E8DA9192E8FA21C00D22819 /* Alamofire */,
+				7ECEE9332E8FC09900313C7C /* FirebaseCore */,
+				7ECEE9352E8FC09900313C7C /* FirebaseMessaging */,
+				7ECEE9382E8FC0B100313C7C /* IQKeyboardManagerSwift */,
+				7ECEE93B2E8FC0C300313C7C /* SVProgressHUD */,
+				7ECEE93E2E8FC0D700313C7C /* SDWebImage */,
 			);
 			productName = LinkSkill;
 			productReference = F9FDD2B42E8F9F5800B9C873 /* LinkSkill.app */;
@@ -115,6 +130,10 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				7E8DA9182E8FA21C00D22819 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				7ECEE9322E8FC09900313C7C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				7ECEE9372E8FC0B100313C7C /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
+				7ECEE93A2E8FC0C300313C7C /* XCRemoteSwiftPackageReference "SVProgressHUD" */,
+				7ECEE93D2E8FC0D700313C7C /* XCRemoteSwiftPackageReference "SDWebImage" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = F9FDD2B52E8F9F5800B9C873 /* Products */;
@@ -362,6 +381,38 @@
 				minimumVersion = 5.10.2;
 			};
 		};
+		7ECEE9322E8FC09900313C7C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.3.0;
+			};
+		};
+		7ECEE9372E8FC0B100313C7C /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.0.1;
+			};
+		};
+		7ECEE93A2E8FC0C300313C7C /* XCRemoteSwiftPackageReference "SVProgressHUD" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SVProgressHUD/SVProgressHUD";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.3.1;
+			};
+		};
+		7ECEE93D2E8FC0D700313C7C /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImage";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.21.2;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -369,6 +420,31 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7E8DA9182E8FA21C00D22819 /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
+		};
+		7ECEE9332E8FC09900313C7C /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7ECEE9322E8FC09900313C7C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		7ECEE9352E8FC09900313C7C /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7ECEE9322E8FC09900313C7C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
+		7ECEE9382E8FC0B100313C7C /* IQKeyboardManagerSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7ECEE9372E8FC0B100313C7C /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
+			productName = IQKeyboardManagerSwift;
+		};
+		7ECEE93B2E8FC0C300313C7C /* SVProgressHUD */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7ECEE93A2E8FC0C300313C7C /* XCRemoteSwiftPackageReference "SVProgressHUD" */;
+			productName = SVProgressHUD;
+		};
+		7ECEE93E2E8FC0D700313C7C /* SDWebImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7ECEE93D2E8FC0D700313C7C /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImage;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
