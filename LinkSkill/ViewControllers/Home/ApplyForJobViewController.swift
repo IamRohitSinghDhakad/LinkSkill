@@ -9,6 +9,10 @@ import UIKit
 
 class ApplyForJobViewController: UIViewController {
 
+    @IBOutlet weak var lblHeadertitle: UILabel!
+    
+    var objJobDetails: JobsModel?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -16,14 +20,9 @@ class ApplyForJobViewController: UIViewController {
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @IBAction func btnOnBack(_ sender: Any) {
+        self.onBackPressed()
     }
-    */
+    
 
 }

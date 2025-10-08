@@ -9,9 +9,11 @@ import UIKit
 
 class MoreTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var lblTitle: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        self.lblTitle.applyStyle(AppFonts.title_regular)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

@@ -15,6 +15,7 @@ class SignUpViewController: UIViewController {
     @IBOutlet weak var tfPassword: UITextField!
     @IBOutlet weak var tfAddress: UITextField!
     
+    var strType:String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()

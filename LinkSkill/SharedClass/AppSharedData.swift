@@ -38,14 +38,19 @@ class AppSharedData: NSObject {
     var userType = ""
     var uuidString = ""
     
-//    var currentLanguage: String {
-//        get {
-//            return LocalizationSystem.sharedInstance.getLanguage()
-//        }
-//        set {
-//            UserDefaults.standard.set(newValue, forKey: "currentLanguage")
-//        }
-//    }
+    var currentLanguage: String {
+           get {
+               if let savedLang = UserDefaults.standard.string(forKey: UserDefaults.KeysDefault.currentLanguage) {
+                   return savedLang
+               }
+               // fallback to system-preferred
+               return Locale.preferredLanguages.first ?? "en"
+           }
+           set {
+               UserDefaults.standard.set(newValue, forKey: UserDefaults.KeysDefault.currentLanguage)
+               UserDefaults.standard.synchronize()
+           }
+       }
     
     open var isLoggedIn: Bool {
         get {
@@ -116,6 +121,7 @@ extension UserDefaults{
         static let kAuthToken = "authToken"
         static  let kUserId = "userId"
         static  let kCategoryID = "category_id"
+        static let currentLanguage = "currentLanguage" 
     }
     
 }

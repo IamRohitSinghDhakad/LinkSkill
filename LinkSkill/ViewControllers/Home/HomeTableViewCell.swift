@@ -9,9 +9,20 @@ import UIKit
 
 class HomeTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var imgVw: UIImageView!
+    @IBOutlet weak var lbltitle: UILabel!
+    @IBOutlet weak var lblServicetype: UILabel!
+    @IBOutlet weak var lblDescription: UILabel!
+    @IBOutlet weak var lblEuros: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
+        lbltitle.applyStyle(AppFonts.title)
+        lblServicetype.applyStyle(AppFonts.subtitle)
+        lblDescription.applyStyle(AppFonts.subtitle)
+        lblEuros.applyStyle(AppFonts.price12)
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

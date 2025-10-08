@@ -40,7 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         IQKeyboardManager.shared.isEnabled = true
         IQKeyboardManager.shared.resignOnTouchOutside = true
         
-      //  self.applyGlobalFont()
+       // self.applyGlobalFont()
         
 //        for family in UIFont.familyNames {
 //            print("Family: \(family)")

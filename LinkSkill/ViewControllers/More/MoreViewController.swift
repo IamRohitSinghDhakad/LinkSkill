@@ -9,21 +9,32 @@ import UIKit
 
 class MoreViewController: UIViewController {
 
+    @IBOutlet weak var tblVw: UITableView!
+    
+    
+    var arrData: [String] = ["My Wallet","Service History", "My Subscription", "My Reviews", "Edit Skills", "Language", "Contact Us", "Privacy Policy", "Terms & Conditions", "Logout", "Delete Account"]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        self.tblVw.delegate = self
+        self.tblVw.dataSource = self
+        
+    }
+}
+
+extension MoreViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.arrData.count
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MoreTableViewCell") as! MoreTableViewCell
+        
+        cell.lblTitle.text = self.arrData[indexPath.row]
+        
+        return cell
+        
     }
-    */
-
 }

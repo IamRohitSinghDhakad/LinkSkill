@@ -9,6 +9,19 @@ import UIKit
 
 class ProfileViewController: UIViewController {
 
+    
+    @IBOutlet weak var imgVwUser: UIImageView!
+    @IBOutlet weak var tfName: UITextField!
+    @IBOutlet weak var tfEmail: UITextField!
+    @IBOutlet weak var tfMobile: UITextField!
+    @IBOutlet weak var tfRate: UITextField!
+    @IBOutlet weak var tfCountry: UITextField!
+    @IBOutlet weak var tfState: UITextField!
+    @IBOutlet weak var tfCity: UITextField!
+    @IBOutlet weak var tfPin: UITextField!
+    @IBOutlet weak var tfAddress: UITextField!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -16,14 +29,10 @@ class ProfileViewController: UIViewController {
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @IBAction func btnOpenImageView(_ sender: Any) {
     }
-    */
-
+    
+    @IBAction func btnSave(_ sender: Any) {
+    }
+    
 }

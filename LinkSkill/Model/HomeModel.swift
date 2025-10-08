@@ -7,122 +7,167 @@
 
 import UIKit
 
-class CategoryModel: NSObject {
+class JobsModel: NSObject {
     
+    var id: String?
     var categoryID: String?
     var categoryName: String?
-    var categoryImage: String?
-    var sortOrder: Int?
-    var status: Int?
+    var details: String?
+    var currency: String?
+    var price: Double?
+    var status: String?
+    var type: String?
+    var isActive: Int?
+    var isBided: Int?
+    var paymentID: String?
+    var userID: String?
+    var userName: String?
+    var userImage: String?
+    var employeeID: String?
+    var employeeName: String?
+    var employeeImage: String?
     var entryDate: String?
     var isSelected: Bool = false
     
     init(from dictionary: [String: Any]) {
         super.init()
         
+        // MARK: - ID
         if let value = dictionary["id"] as? Int {
-            categoryID = "\(value)"
+            id = "\(value)"
         } else if let value = dictionary["id"] as? String {
+            id = value
+        }
+        
+        // MARK: - Category ID
+        if let value = dictionary["category_id"] as? Int {
+            categoryID = "\(value)"
+        } else if let value = dictionary["category_id"] as? String {
             categoryID = value
         }
         
-        categoryName = dictionary["name"] as? String
-        categoryImage = dictionary["image"] as? String
-        
-        if let value = dictionary["sort_order"] as? Int {
-            sortOrder = value
-        } else if let value = dictionary["sort_order"] as? String, let intVal = Int(value) {
-            sortOrder = intVal
+        // MARK: - Category Name
+        if let value = dictionary["category_name"] as? String {
+            categoryName = value
+        } else {
+            categoryName = ""
         }
         
-        if let value = dictionary["status"] as? Int {
+        // MARK: - Details
+        if let value = dictionary["details"] as? String {
+            details = value
+        } else {
+            details = ""
+        }
+        
+        // MARK: - Currency
+        if let value = dictionary["currency"] as? String {
+            currency = value
+        } else {
+            currency = ""
+        }
+        
+        // MARK: - Price
+        if let value = dictionary["price"] as? Double {
+            price = value
+        } else if let value = dictionary["price"] as? Int {
+            price = Double(value)
+        } else if let value = dictionary["price"] as? String, let doubleVal = Double(value) {
+            price = doubleVal
+        } else {
+            price = 0.0
+        }
+        
+        // MARK: - Status
+        if let value = dictionary["status"] as? String {
             status = value
-        } else if let value = dictionary["status"] as? String, let intVal = Int(value) {
-            status = intVal
+        } else {
+            status = ""
         }
         
-        entryDate = dictionary["entrydt"] as? String
-    }
-}
-
-
-
-class VideoModel: NSObject {
-    
-    var videoID: String?
-    var categoryIDs: [String]?
-    var categoryNames: [String]?
-    var entryDate: String?
-    var isPlanActive: Bool?
-    var sortOrder: Int?
-    var status: Int?
-    var thumbnailURL: String?
-    var videoURL: String?
-    var type: String?   // "Free" or "Paid"
-    var isSelected: Bool = false
-    
-    init(from dictionary: [String: Any]) {
-        super.init()
-        
-        // id
-        if let value = dictionary["id"] as? Int {
-            videoID = "\(value)"
-        } else if let value = dictionary["id"] as? String {
-            videoID = value
-        }
-        
-        // category_id → [String]
-        if let catString = dictionary["category_id"] as? String {
-            categoryIDs = catString.components(separatedBy: ",")
-        }
-        
-        // category_names → [String]
-        if let names = dictionary["category_names"] as? [String] {
-            categoryNames = names
-        }
-        
-        // entrydt
-        if let value = dictionary["entrydt"] as? String {
-            entryDate = value
-        }
-        
-        // is_plan_active → Bool
-        if let value = dictionary["is_plan_active"] as? Int {
-            isPlanActive = (value == 1)
-        } else if let value = dictionary["is_plan_active"] as? String,
-                  let intVal = Int(value) {
-            isPlanActive = (intVal == 1)
-        }
-        
-        // sort_order
-        if let value = dictionary["sort_order"] as? Int {
-            sortOrder = value
-        } else if let value = dictionary["sort_order"] as? String,
-                  let intVal = Int(value) {
-            sortOrder = intVal
-        }
-        
-        // status
-        if let value = dictionary["status"] as? Int {
-            status = value
-        } else if let value = dictionary["status"] as? String,
-                  let intVal = Int(value) {
-            status = intVal
-        }
-        
-        // thumbnail
-        if let value = dictionary["thumbnail"] as? String {
-            thumbnailURL = value
-        }
-        
-        // video
-        if let value = dictionary["video"] as? String {
-            videoURL = value
-        }
-        
-        // type
+        // MARK: - Type
         if let value = dictionary["type"] as? String {
             type = value
+        } else {
+            type = ""
+        }
+        
+        // MARK: - isActive
+        if let value = dictionary["is_active"] as? Int {
+            isActive = value
+        } else if let value = dictionary["is_active"] as? String, let intVal = Int(value) {
+            isActive = intVal
+        } else {
+            isActive = 0
+        }
+        
+        // MARK: - isBided
+        if let value = dictionary["is_bided"] as? Int {
+            isBided = value
+        } else if let value = dictionary["is_bided"] as? String, let intVal = Int(value) {
+            isBided = intVal
+        } else {
+            isBided = 0
+        }
+        
+        // MARK: - Payment ID
+        if let value = dictionary["payment_id"] as? String {
+            paymentID = value
+        } else {
+            paymentID = ""
+        }
+        
+        // MARK: - User ID
+        if let value = dictionary["user_id"] as? Int {
+            userID = "\(value)"
+        } else if let value = dictionary["user_id"] as? String {
+            userID = value
+        } else {
+            userID = ""
+        }
+        
+        // MARK: - User Name
+        if let value = dictionary["user_name"] as? String {
+            userName = value
+        } else {
+            userName = ""
+        }
+        
+        // MARK: - User Image
+        if let value = dictionary["user_image"] as? String {
+            userImage = value
+        } else {
+            userImage = ""
+        }
+        
+        // MARK: - Employee ID
+        if let value = dictionary["employee_id"] as? Int {
+            employeeID = "\(value)"
+        } else if let value = dictionary["employee_id"] as? String {
+            employeeID = value
+        } else {
+            employeeID = ""
+        }
+        
+        // MARK: - Employee Name
+        if let value = dictionary["employee_name"] as? String {
+            employeeName = value
+        } else {
+            employeeName = ""
+        }
+        
+        // MARK: - Employee Image
+        if let value = dictionary["employee_image"] as? String {
+            employeeImage = value
+        } else {
+            employeeImage = ""
+        }
+        
+        // MARK: - Entry Date
+        if let value = dictionary["entrydt"] as? String {
+            entryDate = value
+        } else {
+            entryDate = ""
         }
     }
 }
