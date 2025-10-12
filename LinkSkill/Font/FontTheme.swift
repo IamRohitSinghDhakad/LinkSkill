@@ -79,6 +79,7 @@ struct AppFonts {
     static let title      = AppFontStyle.bold(size: 20)
     static let title_regular      = AppFontStyle.regular(size: 18)
     static let subtitle   = AppFontStyle.regular(size: 14)
+    static let subtitle_regular_12      = AppFontStyle.regular(size: 12)
     static let body       = AppFontStyle.italic(size: 12)
     static let price12      = AppFontStyle.bold(size: 12)
     static let price18      = AppFontStyle.bold(size: 18)

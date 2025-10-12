@@ -24,8 +24,7 @@ class HomeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.call_WebService_GetCategory()
-        //  self.call_WebService_GetJobs()
+        self.call_WebService_GetJobs()
     }
     
     private func setupTableView() {
@@ -51,7 +50,7 @@ class HomeViewController: UIViewController {
     
     @objc private func handleRefresh(_ sender: UIRefreshControl) {
         // ✅ Step 4: Reload data from server
-        call_WebService_GetCategory()
+        self.call_WebService_GetJobs()
     }
 }
 
@@ -70,9 +69,17 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         let obj = arrJobs[indexPath.row]
         
         cell.lbltitle.text = obj.userName
-        cell.lblEuros.text = "€\(obj.price?.formattedPrice ?? "") EUR"
+        let symbol = (obj.currency?.uppercased() == "USD") ? "$" : "€"
+        cell.lblEuros.text = "\(symbol)\(obj.price?.formattedPrice ?? "") \(obj.currency ?? "")"
         cell.lblServicetype.text = "\(obj.type ?? "")"
         cell.lblDescription.text = "Description Services: \(obj.details ?? "")"
+        
+        // MARK: - Show/Hide "Already Bid" label
+        if obj.isBided == 1 && obj.status?.caseInsensitiveCompare("Pending") == .orderedSame {
+            cell.vwAlreadyBid.isHidden = false
+        } else {
+            cell.vwAlreadyBid.isHidden = true
+        }
         
         return cell
     }
@@ -89,48 +96,6 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension HomeViewController {
     
-    func call_WebService_GetCategory(){
-        
-        if !objWebServiceManager.isNetworkAvailable(){
-            objWebServiceManager.hideIndicator()
-            objAlert.showAlert(message: "No Internet Connection", title: "Alert", controller: self)
-        }
-        
-        objWebServiceManager.showIndicator()
-        
-        let dictParam = [
-            "user_id": objAppShareData.UserDetail.strUserId!,
-            "language": "en"]as [String:Any]
-        print(dictParam)
-        
-        objWebServiceManager.requestPost(strURL: WsUrl.url_getCategory, queryParams: [:], params: dictParam, strCustomValidation: "", showIndicator: false) { (response) in
-            objWebServiceManager.hideIndicator()
-            
-            let status = (response["status"] as? Int)
-            let message = (response["message"] as? String)
-            if status == MessageConstant.k_StatusCode{
-                if let resultArray = response["result"] as? [[String: Any]] {
-                    self.arrMyCategorys.removeAll()
-                    for data in resultArray{
-                        let obj = CategoryModel(from: data)
-                        if obj.isSelected == 1{
-                            self.arrMyCategorys.append(obj)
-                        }
-                    }
-                    self.call_WebService_GetJobs()
-                    self.refreshControl.endRefreshing()
-                }
-            }else{
-                objAlert.showAlert(message: message ?? "", title: "Alert", controller: self)
-                self.refreshControl.endRefreshing()
-            }
-        } failure: { (error) in
-            objWebServiceManager.hideIndicator()
-            print("Error \(error)")
-            self.refreshControl.endRefreshing()
-        }
-    }
-    
     func call_WebService_GetJobs(){
         
         if !objWebServiceManager.isNetworkAvailable(){
@@ -142,7 +107,8 @@ extension HomeViewController {
         
         let dictParam = [
             "employee_id": objAppShareData.UserDetail.strUserId!,
-            "language": "en"]as [String:Any]
+            "language": objAppShareData.currentLanguage,
+            "status":"Pending"]as [String:Any]
         print(dictParam)
         
         objWebServiceManager.requestPost(strURL: WsUrl.url_getJobs, queryParams: [:], params: dictParam, strCustomValidation: "", showIndicator: false) { (response) in
@@ -152,14 +118,11 @@ extension HomeViewController {
             let message = (response["message"] as? String)
             if status == MessageConstant.k_StatusCode{
                 if let resultArray = response["result"] as? [[String: Any]] {
+                    print(response)
                     self.arrJobs.removeAll()
                     for data in resultArray{
                         let obj = JobsModel(from: data)
-                        if obj.status == "Pending",
-                           let categoryName = obj.categoryName,
-                           self.arrMyCategorys.contains(where: { $0.name == categoryName }) {
-                            self.arrJobs.append(obj)
-                        }
+                        self.arrJobs.append(obj)
                     }
                     
                     if self.arrJobs.count == 0{

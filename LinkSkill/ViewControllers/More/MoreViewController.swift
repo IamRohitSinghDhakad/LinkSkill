@@ -35,6 +35,34 @@ extension MoreViewController: UITableViewDelegate, UITableViewDataSource {
         cell.lblTitle.text = self.arrData[indexPath.row]
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row == 0 {
+            self.pushVc(viewConterlerId: "MyWalletViewController")
+        } else if indexPath.row == 1 {
+            self.pushVc(viewConterlerId: "ServiceHistoryViewController")
+        } else if indexPath.row == 2 {
+            self.pushVc(viewConterlerId: "MySubscriptionViewController")
+        } else if indexPath.row == 3 {
+            self.pushVc(viewConterlerId: "MyReviewsViewController")
+        } else if indexPath.row == 4 {
+            self.pushVc(viewConterlerId: "EditSkillsViewController")
+        } else if indexPath.row == 5 {
+            self.pushVc(viewConterlerId: "LanguageViewController")
+        } else if indexPath.row == 6 {
+            self.pushVc(viewConterlerId: "ContactUsViewController")
+        } else if indexPath.row == 7 {
+            self.pushVc(viewConterlerId: "PrivacyPolicyViewController")
+        } else if indexPath.row == 8 {
+            self.pushVc(viewConterlerId: "PrivacyPolicyViewController")
+        } else if indexPath.row == 9 {
+            // Logout
+           // self.call_WebService_Logout()
+        } else if indexPath.row == 10 {
+            // Delete Account
+           // self.call_WebService_DeleteAccount()
+        }
         
     }
 }

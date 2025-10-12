@@ -46,24 +46,34 @@ class UserModel: NSObject {
     var strBio : String?
     var strDuration : String?
     var strCertificate : String?
-    var strMileage : String?
-    var strMileageUnit : String?
+    var strState : String?
+    var strCountry : String?
+    var strCity : String?
+    var strRate : String?
+    var strZipCode : String?
+    
 
     
     
     init(from dictionary: [String: Any]) {
         super.init()
-        
-        if let value = dictionary["mileage"] {
-            if let doubleValue = value as? Double {
-                strMileage = String(doubleValue)
-            } else if let stringValue = value as? String {
-                strMileage = stringValue
-            }
+       
+        if let value = dictionary["city"] as? String {
+            strCity = value
         }
-
-        if let value = dictionary["mileage_unit"] as? String {
-            strMileageUnit = value
+        
+        if let value = dictionary["zip_code"] as? String {
+            strZipCode = value
+        }else if let value = dictionary["zip_code"] as? Int {
+            strZipCode = "\(value)"
+        }
+       
+        if let value = dictionary["state"] as? String {
+            strState = value
+        }
+        
+        if let value = dictionary["country"] as? String {
+            strCountry = value
         }
         
         if let auth_token = dictionary["device_id"] as? String{
@@ -78,6 +88,14 @@ class UserModel: NSObject {
             strUserId = "\(value)"
             UserDefaults.standard.setValue(strUserId, forKey: objAppShareData.UserDetail.strUserId ?? "")
         }
+        
+        if let value = dictionary["service_rate"] as? String {
+            strRate = value
+        }else if let value = dictionary["service_rate"] as? Int {
+            strRate = "\(value)"
+        }
+        
+        
         
         if let value = dictionary["category_id"] as? String {
             category_id = value

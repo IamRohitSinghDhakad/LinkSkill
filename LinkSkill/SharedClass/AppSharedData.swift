@@ -39,18 +39,25 @@ class AppSharedData: NSObject {
     var uuidString = ""
     
     var currentLanguage: String {
-           get {
-               if let savedLang = UserDefaults.standard.string(forKey: UserDefaults.KeysDefault.currentLanguage) {
-                   return savedLang
-               }
-               // fallback to system-preferred
-               return Locale.preferredLanguages.first ?? "en"
-           }
-           set {
-               UserDefaults.standard.set(newValue, forKey: UserDefaults.KeysDefault.currentLanguage)
-               UserDefaults.standard.synchronize()
-           }
-       }
+        get {
+            if let savedLang = UserDefaults.standard.string(forKey: UserDefaults.KeysDefault.currentLanguage) {
+                return savedLang
+            }
+            
+            // Get system language code only (e.g., "en", "fr", "hi")
+            if let preferred = Locale.preferredLanguages.first {
+                let languageCode = Locale(identifier: preferred).languageCode ?? "en"
+                return languageCode
+            }
+            
+            return "en"
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: UserDefaults.KeysDefault.currentLanguage)
+            UserDefaults.standard.synchronize()
+        }
+    }
+
     
     open var isLoggedIn: Bool {
         get {

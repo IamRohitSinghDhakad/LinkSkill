@@ -8,10 +8,18 @@
 import UIKit
 
 class MyWalletTableViewCell: UITableViewCell {
-
+    @IBOutlet weak var lblDateTime: UILabel!
+    
+    @IBOutlet weak var lblDescription: UILabel!
+    @IBOutlet weak var lblAmount: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
+        self.lblDateTime.applyStyle(AppFonts.subtitle_regular_12)
+        self.lblDescription.applyStyle(AppFonts.price12)
+        self.lblAmount.applyStyle(AppFonts.price12)
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

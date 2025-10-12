@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class JobDetailsViewController: UIViewController {
     
@@ -22,6 +23,15 @@ class JobDetailsViewController: UIViewController {
     @IBOutlet weak var vwAwardedEmployee: UIView!
     @IBOutlet weak var vwAwardedEmployeer: UIView!
     @IBOutlet weak var tblVwhgtConstant: NSLayoutConstraint!
+    @IBOutlet weak var vwApplyForJob: UIView!
+    @IBOutlet weak var lblAwardedEmployeeTitle: UILabel!
+    @IBOutlet weak var lblEmployeeAwardedName: UILabel!
+    
+    @IBOutlet weak var imgVwAwardedEmployee: UIImageView!
+    
+    @IBOutlet weak var lblNameEmployerAwardedName: UILabel!
+    @IBOutlet weak var lblEmployerAwardedTitle: UILabel!
+    @IBOutlet weak var imgVwAwardedEmployer: UIImageView!
     
     var isComingFrom = ""
     var objJobDetails: JobsModel?
@@ -30,7 +40,12 @@ class JobDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
-        setUpUI()
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.setUpUI()
     }
     
     func setUpUI(){
@@ -39,8 +54,8 @@ class JobDetailsViewController: UIViewController {
         self.lblDescriptionServiceTitle.applyStyle(AppFonts.title_regular)
         self.lblDescriptionServiceHeading.applyStyle(AppFonts.title_regular)
         self.lblApplyNow.applyStyle(AppFonts.subtitle)
-        self.lblServiceType.applyStyle(AppFonts.subtitle)
-        self.lblDescriptionService.applyStyle(AppFonts.subtitle)
+        self.lblServiceType.applyStyle(AppFonts.subtitle_regular_12)
+        self.lblDescriptionService.applyStyle(AppFonts.subtitle_regular_12)
         self.btnOnApplyNow.applyStyle(AppFonts.title_regular)
         self.lblEuro.applyStyle(AppFonts.price18)
         
@@ -50,14 +65,46 @@ class JobDetailsViewController: UIViewController {
             
             self.lblServiceType.text = "\(self.objJobDetails?.type ?? "")"
             self.lblDescriptionService.text = "\(self.objJobDetails?.details ?? "")"
-            self.lblEuro.text = "€\(objJobDetails?.price?.formattedPrice ?? "") EUR"
-            self.arrServices.append(self.objJobDetails?.categoryName ?? "")
+            let symbol = (objJobDetails?.currency?.uppercased() == "USD") ? "$" : "€"
+            self.lblEuro.text = "\(symbol)\(objJobDetails?.price?.formattedPrice ?? "") \(objJobDetails?.currency ?? "")"
+            
+            if let categories = self.objJobDetails?.categoryName {
+                let categoryArray = categories
+                    .components(separatedBy: ",")        // Split by comma
+                    .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) } // Remove extra spaces
+                self.arrServices.append(contentsOf: categoryArray)
+            }
+            
             self.tblVwDescreiptionServices.reloadData()
             self.updateTableHeight()
             UIView.animate(withDuration: 0.3) {
                 self.view.layoutIfNeeded()
             }
+            
+            if let status = objJobDetails?.status,
+               (status == "Accepted" || status == "Completed"),
+               let employeeName = objJobDetails?.employeeName,
+               !employeeName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                self.vwAwardedEmployee.isHidden = false
+                self.lblEmployeeAwardedName.text = employeeName
+                if let imageUrlString = objJobDetails?.employeeImage,
+                   !imageUrlString.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
+                   let imageUrl = URL(string: imageUrlString) {
+                    self.imgVwAwardedEmployee.sd_setImage(with: imageUrl, placeholderImage: UIImage(named: "placeholder"))
+                } else {
+                    self.imgVwAwardedEmployee.image = UIImage(named: "placeholder")
+                }
+            } else {
+                self.vwAwardedEmployee.isHidden = true
+            }
+            
+            if objJobDetails?.isBided == 1{
+                self.vwApplyForJob.isHidden = true
+            }else{
+                self.vwApplyForJob.isHidden = false
+            }
         }else{
+            self.vwApplyForJob.isHidden = true
             
         }
     }
@@ -119,5 +166,5 @@ extension JobDetailsViewController : UITableViewDelegate, UITableViewDataSource{
         let rowHeight: CGFloat = 40 // or your estimated/fixed row height
         tblVwhgtConstant.constant = rowHeight * CGFloat(arrServices.count)
     }
-
+    
 }
