@@ -26,7 +26,15 @@ struct WsUrl{
     static let url_update_profile  = BASE_URL + "update_profile"
     static let url_contact_us  = BASE_URL + "contact_us"
     
-    
+    static let url_GetConversation = BASE_URL + "get_conversation"
+    static let url_InsertChat = BASE_URL + "insert_chat"
+    static let url_GetChat = BASE_URL + "get_chat"
+  
+    static let url_ReportUser = BASE_URL + "report_user"
+    static let url_BlockUser = BASE_URL + "block_user"
+    static let url_DeleteAccunt = BASE_URL + "delete_user?user_id="
+    static let url_deleteChatSingleMessage = BASE_URL + "delete_a_message?"
+    static let url_clearConversation = BASE_URL + "clear_conversation"
     
     
     static let url_getConfirmationStatus  = BASE_URL + "update_confirmation_status"
