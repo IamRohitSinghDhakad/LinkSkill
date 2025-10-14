@@ -17,6 +17,7 @@ class ChatDetailModel:NSObject {
     var strSenderId : String = ""
     var strChatTime   : String = ""
     var strType   : String = ""
+    var strChat_document : String = ""
  
     
     
@@ -42,6 +43,10 @@ class ChatDetailModel:NSObject {
         
         if let chat_image = dict["chat_image"] as? String{
             self.strImageUrl = chat_image.trim()
+        }
+        
+        if let chat_document = dict["chat_document"] as? String{
+            self.strChat_document = chat_document.trim()
         }
         
         

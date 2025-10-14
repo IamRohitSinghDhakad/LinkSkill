@@ -53,8 +53,19 @@ extension ChatViewController : UITableViewDataSource, UITableViewDelegate {
             cell.imgVwUser.image = #imageLiteral(resourceName: "logo")
         }
         cell.lblUserName.text = obj.sender_name
-        cell.lblLastMessage.text = obj.last_message
         cell.lblTimeAgo.text = obj.time_ago
+        
+        if let lastMessage = obj.last_message, !lastMessage.isEmpty {
+            // 📝 Case 1: Text message available
+            cell.lblLastMessage.text = lastMessage
+        } else if let lastImage = obj.last_image, !lastImage.isEmpty {
+            // 🖼️ Case 2: Image message available
+            cell.lblLastMessage.text = "📷 Image"
+        } else {
+            // 📁 Case 3: Otherwise, assume it's a file
+            cell.lblLastMessage.text = "📎 File"
+        }
+
         
         // Add long press gesture to the cell
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPressGesture(_:)))
@@ -79,9 +90,10 @@ extension ChatViewController : UITableViewDataSource, UITableViewDelegate {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "ChatDetailViewController")as! ChatDetailViewController
         vc.strReceiverId = self.arrUserList[indexPath.row].receiver_id ?? ""
         vc.strSenderId = self.arrUserList[indexPath.row].sender_id ?? ""
-        vc.strProductId = self.arrUserList[indexPath.row].product_id ?? ""
+        vc.strJobId = self.arrUserList[indexPath.row].job_id ?? ""
         vc.strUsername = self.arrUserList[indexPath.row].sender_name ?? ""
         vc.isBlocked = self.arrUserList[indexPath.row].strBlocked
+        
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -119,7 +131,7 @@ extension ChatViewController : UITableViewDataSource, UITableViewDelegate {
             }
         }
         objAlert.showAlertCallBack(alertLeftBtn: "Yes".localized(), alertRightBtn: "No".localized(), title: "", message: "Are you sure you want to delete chat history with this user ?".localized(), controller: self) {
-            self.call_ClearConversation(strSenderID: self.arrUserList[sender.tag].sender_id ?? "", strReceiverID: self.arrUserList[sender.tag].receiver_id ?? "", strProductID: self.arrUserList[sender.tag].product_id ?? "")
+            self.call_ClearConversation(strSenderID: self.arrUserList[sender.tag].sender_id ?? "", strReceiverID: self.arrUserList[sender.tag].receiver_id ?? "", strProductID: self.arrUserList[sender.tag].job_id ?? "")
         }
         
     }

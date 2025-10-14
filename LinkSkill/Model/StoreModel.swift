@@ -11,12 +11,13 @@ class StoreModel: NSObject {
     
 //    var sender_image : String?
     var last_message : String?
+    var last_image : String?
     var receiver_id : String?
     var sender_id : String?
     var sender_image : String?
     var sender_name : String?
     var time_ago : String?
-    var product_id : String?
+    var job_id : String?
     var strBlocked : String = ""
     
     init(from dictionary: [String: Any]) {
@@ -31,6 +32,10 @@ class StoreModel: NSObject {
         
         if let last_message = dictionary["last_message"] as? String{
             self.last_message = last_message
+        }
+        
+        if let last_image = dictionary["last_image"] as? String{
+            self.last_image = last_image
         }
         
         if let time_ago = dictionary["time_ago"] as? String{
@@ -49,10 +54,10 @@ class StoreModel: NSObject {
             self.sender_id = sender_id
         }
         
-        if let product_id = dictionary["product_id"] as? Int{
-            self.product_id = "\(product_id)"
-        }else if let product_id = dictionary["product_id"] as? String{
-            self.product_id = product_id
+        if let job_id = dictionary["job_id"] as? Int{
+            self.job_id = "\(job_id)"
+        }else if let job_id = dictionary["job_id"] as? String{
+            self.job_id = job_id
         }
         
         if let blocked = dictionary["blocked"] as? String{

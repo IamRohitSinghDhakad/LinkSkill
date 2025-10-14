@@ -7,6 +7,8 @@
 
 import UIKit
 import SDWebImage
+import MobileCoreServices
+import UniformTypeIdentifiers
 
 class ChatDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -20,12 +22,13 @@ class ChatDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBOutlet weak var lblBlockMessage: UILabel!
     @IBOutlet weak var vwClearConversation: UIView!
     
+    @IBOutlet weak var btnAddMedia: UIButton!
     
     let txtViewCommentMaxHeight: CGFloat = 100
     let txtViewCommentMinHeight: CGFloat = 34
     var strReceiverId = ""
     var strSenderId = ""
-    var strProductId = ""
+    var strJobId = ""
     var strUsername = ""
     var isBlocked = ""
     var timer: Timer?
@@ -35,6 +38,8 @@ class ChatDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     //  var arrChatMsg = NSMutableArray()
     var arrChatMsg = [ChatDetailModel]()
     var dictPrevious = NSDictionary()
+    var imagePicker = UIImagePickerController()
+    var pickedImage:UIImage?
     
     
     override func viewDidLoad() {
@@ -48,24 +53,24 @@ class ChatDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(sender:)))
         self.tblChatList.addGestureRecognizer(longPress)
         
-//        if self.timer == nil{
-//            self.timer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(self.updateTimer), userInfo: nil, repeats: true)
-//        }else{
-//            
-//        }
-//        print(isBlocked)
-//        if self.isBlocked == "1"{
-//            self.vwBlocked.isHidden = false
-//        }else{
-//            self.vwBlocked.isHidden = true
-//        }
+        //        if self.timer == nil{
+        //            self.timer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(self.updateTimer), userInfo: nil, repeats: true)
+        //        }else{
+        //
+        //        }
+        //        print(isBlocked)
+        //        if self.isBlocked == "1"{
+        //            self.vwBlocked.isHidden = false
+        //        }else{
+        //            self.vwBlocked.isHidden = true
+        //        }
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         DispatchQueue.main.async {
-           // self.vwHeader.setCornerRadiusIndiviualCorners(radius: 30.0, corners: [.bottomLeft, .bottomRight])
+            // self.vwHeader.setCornerRadiusIndiviualCorners(radius: 30.0, corners: [.bottomLeft, .bottomRight])
         }
         self.call_GetProfile(strUserID: self.strSenderId)
     }
@@ -91,7 +96,7 @@ class ChatDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         objAlert.showAlertCallBack(alertLeftBtn: "Yes", alertRightBtn: "No", title: "", message: "You want to delete the chat with \(self.strUsername) ?", controller: self) {
             self.timer?.invalidate()
             self.timer = nil
-            self.call_ClearConversation(strUserID: objAppShareData.UserDetail.strUserId ?? "", strProductID: self.strProductId)
+            self.call_ClearConversation(strUserID: objAppShareData.UserDetail.strUserId ?? "", strProductID: self.strJobId)
         }
     }
     
@@ -99,17 +104,17 @@ class ChatDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         
         // Create the action sheet
         let actionSheet = UIAlertController(title: "Choose Action".localized(), message: "What would you like to do?".localized(), preferredStyle: .actionSheet)
-
+        
         // Add the "Report" action
         let reportAction = UIAlertAction(title: "Report".localized(), style: .destructive) { action in
             // Handle the report action here
             print("User chose to report")
-//            let vc = self.storyboard?.instantiateViewController(withIdentifier: "ReportViewController")as! ReportViewController
-//            vc.strUser_id = self.strSenderId
-//            self.navigationController?.pushViewController(vc, animated: true)
+            //            let vc = self.storyboard?.instantiateViewController(withIdentifier: "ReportViewController")as! ReportViewController
+            //            vc.strUser_id = self.strSenderId
+            //            self.navigationController?.pushViewController(vc, animated: true)
         }
         actionSheet.addAction(reportAction)
-
+        
         // Add the "Block" or "Unblock" action based on the isBlocked status
         if self.isBlocked == "true" {
             let unblockAction = UIAlertAction(title: "Unblock".localized(), style: .destructive) { action in
@@ -132,102 +137,130 @@ class ChatDetailViewController: UIViewController, UITableViewDelegate, UITableVi
             }
             actionSheet.addAction(blockAction)
         }
-
+        
         // Add the "Cancel" action
         let cancelAction = UIAlertAction(title: "Cancel".localized(), style: .cancel) { action in
             // Handle the cancel action here
             print("User canceled the action")
         }
         actionSheet.addAction(cancelAction)
-
+        
         // Present the action sheet
         if let popoverController = actionSheet.popoverPresentationController {
             popoverController.sourceView = self.view // to set the source of your alert if it is a popover
             popoverController.sourceRect = (sender as AnyObject).bounds // you can set the position of the popover here
         }
-
+        
         self.present(actionSheet, animated: true, completion: nil)
-
         
-        
-//        // Create the action sheet
-//        let actionSheet = UIAlertController(title: "Choose Action".localized(), message: "What would you like to do?".localized(), preferredStyle: .actionSheet)
-//        
-//        // Add the "Report" action
-//        let reportAction = UIAlertAction(title: "Report".localized(), style: .destructive) { action in
-//            // Handle the report action here
-//            print("User chose to report")
-//            // You can navigate to the report screen or show another dialog here
-//            self.call_ReportUser_Api(userID: self.strSenderId)
-//        }
-//        
-//        // Add the "Block" action
-//        if self.isBlocked == "1"{
-//            
-//        }else{
-//            
-//        }
-//        let blockAction = UIAlertAction(title: "Block".localized(), style: .destructive) { action in
-//            // Handle the block action here
-//            print("User chose to block")
-//            // You can handle the blocking logic here
-//            self.call_BlockUser_Api(userID: self.strSenderId)
-////            self.vwBlocked.isHidden = false
-////            self.lblBlockMessage.text = "User Blocked".localized()
-//        }
-//        
-//        // Add the "Cancel" action
-//        let cancelAction = UIAlertAction(title: "Cancel".localized(), style: .cancel) { action in
-//            // Handle the cancel action here
-//            print("User canceled the action")
-//        }
-//        
-//        // Add the actions to the action sheet
-//        actionSheet.addAction(reportAction)
-//        actionSheet.addAction(blockAction)
-//        actionSheet.addAction(cancelAction)
-//        
-//        // Present the action sheet
-//        if let popoverController = actionSheet.popoverPresentationController {
-//            popoverController.sourceView = self.view // to set the source of your alert if it is a popover
-//            popoverController.sourceRect = (sender as AnyObject).bounds // you can set the position of the popover here
-//        }
-//        
-//        self.present(actionSheet, animated: true, completion: nil)
     }
+    
+    @IBAction func btnOnAddMedia(_ sender: Any) {
+        let actionSheet = UIAlertController(title: "Choose Option", message: nil, preferredStyle: .actionSheet)
+        
+        // MARK: - Image Selection
+        actionSheet.addAction(UIAlertAction(title: "Choose Image", style: .default, handler: { _ in
+            MediaPicker.shared.pickMedia(from: self) { image, dict in
+                self.pickedImage = image
+                self.call_SendImageMessageonly()
+            }
+        }))
+        
+        // MARK: - Document Selection
+        actionSheet.addAction(UIAlertAction(title: "Choose Document", style: .default, handler: { _ in
+            self.openDocumentPicker()
+        }))
+        
+        // MARK: - Cancel
+        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        // For iPad support
+        if let popoverController = actionSheet.popoverPresentationController {
+            popoverController.sourceView = self.view
+            popoverController.sourceRect = (sender as AnyObject).frame
+        }
+        
+        self.present(actionSheet, animated: true)
+    }
+    
+    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.arrChatMsg.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ChatListCell") as! ChatListCell
-        
-        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ChatDetailTableViewCell", for: indexPath) as! ChatDetailTableViewCell
         let obj = self.arrChatMsg[indexPath.row]
         
+        // Hide all views first
+        cell.vwMyMsg.isHidden = true
+        cell.vwOpponentMessage.isHidden = true
+        cell.vwMyImage.isHidden = true
+        cell.vwOpponentImage.isHidden = true
+        cell.vwMyDocument.isHidden = true
+        cell.vwOpponentDocumnet.isHidden = true
         
-    
+        // Determine sender side
+        let isOpponent = obj.strSenderId == self.strReceiverId
         
-        if obj.strSenderId == self.strReceiverId{
-            cell.vwMyMsg.isHidden = false
-            cell.lblMyMsg.text = obj.strOpponentChatMessage
-            cell.lblMyMsgTime.text = obj.strOpponentChatTime
-            cell.vwOpponent.isHidden = true
-        }else{
-            cell.lblOpponentMsg.text = obj.strOpponentChatMessage
-            cell.lblopponentMsgTime.text = obj.strOpponentChatTime
-            cell.vwOpponent.isHidden = false
-            cell.vwMyMsg.isHidden = true
+        if isOpponent {
+            // Opponent Message
+            if obj.strType == "text" {
+                cell.vwOpponentMessage.isHidden = false
+                cell.lblOpponentTxtMsg.text = obj.strOpponentChatMessage
+                cell.lblOpponentTimeTxt.text = obj.strOpponentChatTime
+                
+            } else if obj.strType == "image" {
+                cell.vwOpponentImage.isHidden = false
+                cell.lblImgTimeOpponent.text = obj.strOpponentChatTime
+                if let imgURL = URL(string: obj.strImageUrl) {
+                    cell.imgVwopponent.sd_setImage(with: imgURL, placeholderImage: UIImage(named: "placeholder"))
+                }
+                
+            } else if obj.strType == "file" {
+                cell.vwOpponentDocumnet.isHidden = false
+                //cell.btnOpponentDoc.setTitle("Open Document", for: .normal)
+                cell.btnOpponentDoc.tag = indexPath.row
+                cell.btnOpponentDoc.addTarget(self, action: #selector(openDocument(_:)), for: .touchUpInside)
+            }
+            
+        } else {
+            // My Message
+            if obj.strType == "text" {
+                cell.vwMyMsg.isHidden = false
+                cell.lblMyMsgTxt.text = obj.strOpponentChatMessage
+                cell.lblMyMsgTime.text = obj.strOpponentChatTime
+                
+            } else if obj.strType == "image" {
+                cell.vwMyImage.isHidden = false
+                cell.lblTimeImageMySide.text = obj.strOpponentChatTime
+                if let imgURL = URL(string: obj.strImageUrl) {
+                    cell.imgVwMy.sd_setImage(with: imgURL, placeholderImage: UIImage(named: "placeholder"))
+                }
+                
+            } else if obj.strType == "file" {
+                cell.vwMyDocument.isHidden = false
+                // cell.btnMyDoc.setTitle("Open Document", for: .normal)
+                cell.btnMyDoc.tag = indexPath.row
+                cell.btnMyDoc.addTarget(self, action: #selector(openDocument(_:)), for: .touchUpInside)
+            }
         }
-        //    }
-        
-        cell.lblOpponentMsg.text = obj.strOpponentChatMessage
-        //  cell.lblopponentMsgTime.text = obj.strChatTime
-        //  cell.lblMyMsgTime.text = obj.strChatTime
         
         return cell
     }
+    
+    @objc func openDocument(_ sender: UIButton) {
+        let obj = self.arrChatMsg[sender.tag]
+        let urlString = obj.strChat_document.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        if !urlString.isEmpty, let url = URL(string: urlString) {
+            UIApplication.shared.open(url)
+        }
+    }
+    
+    
+    
     
     @objc private func handleLongPress(sender: UILongPressGestureRecognizer) {
         if sender.state == .began {
@@ -251,7 +284,7 @@ class ChatDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         let actionsheet = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertController.Style.actionSheet)
         
         actionsheet.addAction(UIAlertAction(title: "Delete message", style: UIAlertAction.Style.default, handler: { (action) -> Void in
-         //Delete Message
+            //Delete Message
             
             objAlert.showAlertCallBack(alertLeftBtn: "Yes", alertRightBtn: "No", title: "", message: "Do you want to delete this message?", controller: self) {
                 let msgID = self.arrChatMsg[index].strMsgIDForDelete
@@ -272,7 +305,7 @@ class ChatDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         }))
         self.present(actionsheet, animated: true, completion: nil)
     }
-
+    
     
     func updateTableContentInset() {
         let numRows = self.tblChatList.numberOfRows(inSection: 0)
@@ -394,7 +427,7 @@ extension ChatDetailViewController{
             return
         }
         
-      //  objWebServiceManager.showIndicator()
+        //  objWebServiceManager.showIndicator()
         
         let parameter = ["login_user_id" : objAppShareData.UserDetail.strUserId ?? "", "language":objAppShareData.currentLanguage] as [String:Any]
         
@@ -410,7 +443,7 @@ extension ChatDetailViewController{
             if status == MessageConstant.k_StatusCode{
                 
                 if let user_details  = response["result"] as? [String:Any] {
-                   print(user_details)
+                    print(user_details)
                     var blockStatus = ""
                     var blockedByMeStatus = ""
                     if let status = user_details["blocked"]as? String{
@@ -472,14 +505,10 @@ extension ChatDetailViewController{
             return
         }
         
-        // objWebServiceManager.showIndicator()
-        
-        //        let receiverId = dictPrevious.GetString(forKey: "receiver_id")
-        //        let senderId = dictPrevious.GetString(forKey: "sender_id")
-        
         let dict = ["receiver_id":self.strReceiverId,
                     "sender_id":self.strSenderId,
-                    "product_id":self.strProductId]
+                    "job_id":self.strJobId,
+                    "language": objAppShareData.currentLanguage]
         
         print(dict)
         
@@ -491,22 +520,6 @@ extension ChatDetailViewController{
             let message = (response["message"] as? String)
             print(response)
             if status == MessageConstant.k_StatusCode{
-                
-                //                if let user_details  = response["result"] as? [[String:Any]] {
-                //                    print("user_details>>>>>\(user_details)")
-                //
-                //                    for data in user_details{
-                //                        let obj = ChatDetailModel.init(dict: data)
-                //                        self.arrChatMsg.append(obj)
-                //                    }
-                //                 //   self.arrChatMsg = user_details.mutableCopy() as! NSMutableArray
-                //                    if self.arrChatMsg.count > 0 {
-                //                        self.tblChatList.displayBackgroundText(text: "")
-                //                    }else{
-                //                        self.tblChatList.displayBackgroundText(text: "No Chat Found")
-                //                    }
-                //                    self.tblChatList.reloadData()
-                //                }
                 
                 if let arrData  = response["result"] as? [[String:Any]] {
                     var newArrayChatMessages: [ChatDetailModel] = []
@@ -615,9 +628,10 @@ extension ChatDetailViewController{
         
         let dicrParam = ["receiver_id":self.strSenderId,//Opponent ID
                          "sender_id":self.strReceiverId,//My ID
-                         "product_id":self.strProductId,
+                         "job_id":self.strJobId,
+                         "language": objAppShareData.currentLanguage,
                          "chat_message":strText]as [String:Any]
-        
+        print(dicrParam)
         objWebServiceManager.requestPost(strURL: WsUrl.url_InsertChat, queryParams: [:], params: dicrParam, strCustomValidation: "", showIndicator: false) { (response) in
             objWebServiceManager.hideIndicator()
             let status = (response["status"] as? Int)
@@ -641,17 +655,6 @@ extension ChatDetailViewController{
             objWebServiceManager.hideIndicator()
         }
     }
-}
-
-class ChatListCell:UITableViewCell {
-    
-    @IBOutlet weak var vwOpponent: UIView!
-    @IBOutlet weak var vwMyMsg: UIView!
-    @IBOutlet weak var lblOpponentMsg: UILabel!
-    @IBOutlet weak var lblopponentMsgTime: UILabel!
-    @IBOutlet weak var lblMyMsg: UILabel!
-    @IBOutlet weak var lblMyMsgTime: UILabel!
-    
 }
 
 
@@ -720,9 +723,9 @@ extension ChatDetailViewController{
                 objWebServiceManager.hideIndicator()
                 
                 if (response["result"]as? String) != nil{
-                   // self.tblChat.displayBackgroundText(text: "ningún record fue encontrado")
+                    // self.tblChat.displayBackgroundText(text: "ningún record fue encontrado")
                 }else{
-                   // objAlert.showAlert(message: message ?? "", title: "Alert", controller: self)
+                    // objAlert.showAlert(message: message ?? "", title: "Alert", controller: self)
                 }
             }
         } failure: { (Error) in
@@ -763,7 +766,7 @@ extension ChatDetailViewController{
             
             if status == MessageConstant.k_StatusCode{
                 
-               
+                
                 
             }else{
                 objWebServiceManager.hideIndicator()
@@ -844,7 +847,7 @@ extension ChatDetailViewController{
         }
         
         let parameter = ["blocked_by":objAppShareData.UserDetail.strUserId ?? "","user_id":strUserID] as [String:Any]
-       // let parameter = ["blocked_by":strUserID,"user_id":objAppShareData.UserDetail.strUser_id] as [String:Any]
+        // let parameter = ["blocked_by":strUserID,"user_id":objAppShareData.UserDetail.strUser_id] as [String:Any]
         
         print(parameter)
         objWebServiceManager.requestPost(strURL: WsUrl.url_BlockUser, queryParams: [:], params: parameter, strCustomValidation: "", showIndicator: false) { (response) in
@@ -857,7 +860,7 @@ extension ChatDetailViewController{
             if status == MessageConstant.k_StatusCode{
                 
                 if let user_details  = response["result"] as? [String:Any] {
-                   print(user_details)
+                    print(user_details)
                     
                     
                     if let unblockedStatus = user_details["unblocked"]as? Int{
@@ -878,9 +881,9 @@ extension ChatDetailViewController{
                         self.timer = nil
                     }
                     
-                   // self.call_GetProfile(strUserID: objAppShareData.UserDetail.strUser_id)
-                  
-                  
+                    // self.call_GetProfile(strUserID: objAppShareData.UserDetail.strUser_id)
+                    
+                    
                     
                 }
                 else {
@@ -897,4 +900,137 @@ extension ChatDetailViewController{
             objWebServiceManager.hideIndicator()
         }
     }
+    
+    //MARK:  Send Image Message Only
+    func call_SendImageMessageonly(){
+        
+        if !objWebServiceManager.isNetworkAvailable(){
+            objWebServiceManager.hideIndicator()
+            objAlert.showAlert(message: "No Internet Connection", title: "Alert", controller: self)
+            return
+        }
+        
+        objWebServiceManager.showIndicator()
+        
+        var imageData = [Data]()
+        var imgData : Data?
+        if self.pickedImage != nil{
+            imgData = (self.pickedImage?.jpegData(compressionQuality: 0.2))!
+        }
+        
+        imageData.append(imgData!)
+        
+        let imageParam = ["chat_image"]
+        
+        
+        let dicrParam = ["receiver_id":self.strSenderId,//Opponent ID
+                         "sender_id":self.strReceiverId,// My ID
+                         "job_id":"",
+                         "type":"image"
+                         
+        ]as [String:Any]
+        
+        objWebServiceManager.uploadMultipartWithImagesData(strURL: WsUrl.url_InsertChat, params: dicrParam, showIndicator: true, customValidation: "", imageData: imgData, imageToUpload: imageData, imagesParam: imageParam, fileName: "chat_image", mimeType: "image/jpeg") { (response) in
+            
+            objWebServiceManager.hideIndicator()
+            _ = (response["status"] as? Int)
+            _ = (response["message"] as? String)
+            
+            print(response)
+            
+            if let result = response["result"]as? String{
+                if result == "successful"{
+                    self.initilizeFirstTimeOnly = false
+                }else{
+                    objAlert.showAlert(message: "Inappropriate content detected. Please modify your message.".localized(), controller: self)
+                }
+            }else{
+                objWebServiceManager.hideIndicator()
+                
+            }
+            
+        } failure: { (Error) in
+            print(Error)
+            objWebServiceManager.hideIndicator()
+        }
+    }
+    
+    //MARK: Send Document Only
+    func call_SendDocumentMessageonly(documentURL: URL){
+        
+        if !objWebServiceManager.isNetworkAvailable(){
+            objWebServiceManager.hideIndicator()
+            objAlert.showAlert(message: "No Internet Connection", title: "Alert", controller: self)
+            return
+        }
+        
+        objWebServiceManager.showIndicator()
+        
+        // Convert document to Data
+        guard let documentData = try? Data(contentsOf: documentURL) else {
+            objAlert.showAlert(message: "Unable to read selected document.", title: "Error", controller: self)
+            return
+        }
+        
+        let imageParam = ["chat_document"]
+        
+        
+        let dicrParam = ["receiver_id":self.strSenderId,//Opponent ID
+                         "sender_id":self.strReceiverId,// My ID
+                         "job_id":self.strJobId,
+                         "language": objAppShareData.currentLanguage,
+                         "type":"file"
+        ]as [String:Any]
+        
+        
+        objWebServiceManager.uploadMultipartWithDocumentData(strURL: WsUrl.url_InsertChat, params: dicrParam, showIndicator: true, customValidation: "", imageData: documentData, imageToUpload: [documentData], imagesParam: imageParam, fileName: "chat_document", mimeType: "file/file") { (response) in
+            
+            objWebServiceManager.hideIndicator()
+            _ = (response["status"] as? Int)
+            _ = (response["message"] as? String)
+            
+            print(response)
+            
+            if let result = response["result"]as? String{
+                if result == "successful"{
+                    self.initilizeFirstTimeOnly = false
+                }else{
+                    objAlert.showAlert(message: "Inappropriate content detected. Please modify your message.".localized(), controller: self)
+                }
+            }else{
+                objWebServiceManager.hideIndicator()
+                
+            }
+            
+        } failure: { (Error) in
+            print(Error)
+            objWebServiceManager.hideIndicator()
+        }
+    }
+}
+
+
+extension ChatDetailViewController: UIDocumentPickerDelegate{
+    
+    // MARK: - Open Document Picker
+    func openDocumentPicker() {
+        let supportedTypes: [UTType] = [.pdf, .image, .text, .data, .content, .item]
+        let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: supportedTypes, asCopy: true)
+        documentPicker.delegate = self
+        documentPicker.allowsMultipleSelection = false
+        self.present(documentPicker, animated: true)
+    }
+    
+    // MARK: - UIDocumentPickerDelegate
+    // MARK: - UIDocumentPickerDelegate
+    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+        guard let selectedFileURL = urls.first else { return }
+        print("📄 Selected Document URL: \(selectedFileURL)")
+        
+        // Start uploading document
+        self.call_SendDocumentMessageonly(documentURL: selectedFileURL)
+    }
+
+
+    
 }
