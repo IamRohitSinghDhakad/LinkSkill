@@ -10,6 +10,7 @@ import SDWebImage
 
 class JobDetailsViewController: UIViewController {
     
+    @IBOutlet weak var subVw: UIView!
     @IBOutlet weak var lblHeadertitle: UILabel!
     @IBOutlet weak var lblServicetypetitle: UILabel!
     @IBOutlet weak var lblServiceType: UILabel!
@@ -26,12 +27,19 @@ class JobDetailsViewController: UIViewController {
     @IBOutlet weak var vwApplyForJob: UIView!
     @IBOutlet weak var lblAwardedEmployeeTitle: UILabel!
     @IBOutlet weak var lblEmployeeAwardedName: UILabel!
-    
     @IBOutlet weak var imgVwAwardedEmployee: UIImageView!
-    
     @IBOutlet weak var lblNameEmployerAwardedName: UILabel!
     @IBOutlet weak var lblEmployerAwardedTitle: UILabel!
     @IBOutlet weak var imgVwAwardedEmployer: UIImageView!
+    @IBOutlet weak var vwCreateMilestone: UIView!
+    @IBOutlet weak var tfEnterAmount: UITextField!
+    @IBOutlet weak var btnContinueMileStone: UIButton!
+    
+    @IBOutlet weak var vwCompleted: UIView!
+    @IBOutlet weak var lblEmployeeNameCompleted: UILabel!
+    @IBOutlet weak var imgVwEmployeeCompleted: UIImageView!
+    @IBOutlet weak var ratingVwCompletedEmployee: FloatRatingView!
+    @IBOutlet weak var lblCommentEmployeeCompleted: UILabel!
     
     var isComingFrom = ""
     var objJobDetails: JobsModel?
@@ -40,7 +48,6 @@ class JobDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -49,6 +56,7 @@ class JobDetailsViewController: UIViewController {
     }
     
     func setUpUI(){
+        self.subVw.isHidden = true
         self.lblHeadertitle.applyStyle(AppFonts.title)
         self.lblServicetypetitle.applyStyle(AppFonts.title_regular)
         self.lblDescriptionServiceTitle.applyStyle(AppFonts.title_regular)
@@ -59,9 +67,14 @@ class JobDetailsViewController: UIViewController {
         self.btnOnApplyNow.applyStyle(AppFonts.title_regular)
         self.lblEuro.applyStyle(AppFonts.price18)
         
+        self.vwAwardedEmployee.isHidden = true
+        self.vwAwardedEmployeer.isHidden = true
+        self.vwCompleted.isHidden = true
+        
         if self.isComingFrom == "Employee"{
-            self.vwAwardedEmployee.isHidden = true
-            self.vwAwardedEmployeer.isHidden = true
+            
+            self.lblApplyNow.text = "Apply now if you have\nthe requier skill"
+            self.btnOnApplyNow.setTitle("Apply Now", for: .normal)
             
             self.lblServiceType.text = "\(self.objJobDetails?.type ?? "")"
             self.lblDescriptionService.text = "\(self.objJobDetails?.details ?? "")"
@@ -104,7 +117,52 @@ class JobDetailsViewController: UIViewController {
                 self.vwApplyForJob.isHidden = false
             }
         }else{
-            self.vwApplyForJob.isHidden = true
+            self.lblApplyNow.text = "Applyed proposals on my\nopen service request"
+            self.btnOnApplyNow.setTitle("Proposals", for: .normal)
+            
+            self.lblServiceType.text = "\(self.objJobDetails?.type ?? "")"
+            self.lblDescriptionService.text = "\(self.objJobDetails?.details ?? "")"
+            let symbol = (objJobDetails?.currency?.uppercased() == "USD") ? "$" : "€"
+            self.lblEuro.text = "\(symbol)\(objJobDetails?.price?.formattedPrice ?? "") \(objJobDetails?.currency ?? "")"
+            
+            if let categories = self.objJobDetails?.categoryName {
+                let categoryArray = categories
+                    .components(separatedBy: ",")        // Split by comma
+                    .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) } // Remove extra spaces
+                self.arrServices.append(contentsOf: categoryArray)
+            }
+            
+            self.tblVwDescreiptionServices.reloadData()
+            self.updateTableHeight()
+            UIView.animate(withDuration: 0.3) {
+                self.view.layoutIfNeeded()
+            }
+            
+            if objJobDetails?.status == "Awarded"{
+                self.vwApplyForJob.isHidden = false
+                self.imgVwAwardedEmployee.sd_setImage(with: URL(string: objJobDetails?.employeeImage ?? ""), placeholderImage: UIImage(named: "logo"))
+                self.lblEmployeeAwardedName.text = objJobDetails?.employeeName
+                
+                self.vwAwardedEmployee.isHidden = false
+                self.vwAwardedEmployeer.isHidden = true
+                
+            }else if objJobDetails?.status == "Accepted"{
+                self.vwApplyForJob.isHidden = true
+                self.imgVwAwardedEmployer.sd_setImage(with: URL(string: objJobDetails?.employeeImage ?? ""), placeholderImage: UIImage(named: "logo"))
+                self.lblNameEmployerAwardedName.text = objJobDetails?.employeeName
+                
+                self.vwAwardedEmployee.isHidden = true
+                self.vwAwardedEmployeer.isHidden = false
+            }else{
+              //  self.call_WebService_MyReviews(strEmployeeID: objJobDetails?.employeeID ?? "")
+                self.vwApplyForJob.isHidden = true
+                self.vwCompleted.isHidden = false
+                self.imgVwEmployeeCompleted.sd_setImage(with: URL(string: objJobDetails?.employeeImage ?? ""), placeholderImage: UIImage(named: "logo"))
+                self.lblEmployeeNameCompleted.text = objJobDetails?.employeeName
+                self.ratingVwCompletedEmployee.rating = 3.5
+                //self.lblCommentEmployeeCompleted.text =  ""
+                
+            }
             
         }
     }
@@ -125,9 +183,16 @@ class JobDetailsViewController: UIViewController {
     
     
     @IBAction func btnApplyNow(_ sender: Any) {
-        let vc = mainStoryboard.instantiateViewController(withIdentifier: "ApplyForJobViewController") as! ApplyForJobViewController
-        vc.objJobDetails = self.objJobDetails
-        self.navigationController?.pushViewController(vc, animated: true)
+        if isComingFrom == "Employee" {
+            let vc = mainStoryboard.instantiateViewController(withIdentifier: "ApplyForJobViewController") as! ApplyForJobViewController
+            vc.objJobDetails = self.objJobDetails
+            self.navigationController?.pushViewController(vc, animated: true)
+        }else{
+            let vc = mainStoryboard.instantiateViewController(withIdentifier: "ProposalViewController") as! ProposalViewController
+            vc.objJobDetails = self.objJobDetails
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+       
     }
     
     @IBAction func btnOnWhatIsMilestone(_ sender: Any) {
@@ -135,10 +200,18 @@ class JobDetailsViewController: UIViewController {
     }
     
     @IBAction func btnOnCreateMilestone(_ sender: Any) {
-        
+        self.subVw.isHidden = false
     }
     
     @IBAction func btnOnMarkAsComplete(_ sender: Any) {
+        self.call_WebService_UpdaetJobStatus()
+    }
+    
+    @IBAction func btnOnCloseSubve(_ sender: Any) {
+        self.subVw.isHidden = true
+    }
+    
+    @IBAction func btnOnCreateMileStone(_ sender: Any) {
         
     }
 }
@@ -167,4 +240,153 @@ extension JobDetailsViewController : UITableViewDelegate, UITableViewDataSource{
         tblVwhgtConstant.constant = rowHeight * CGFloat(arrServices.count)
     }
     
+}
+
+extension JobDetailsViewController {
+    
+    
+    func call_WebService_UpdaetJobStatus(){
+        
+        if !objWebServiceManager.isNetworkAvailable(){
+            objWebServiceManager.hideIndicator()
+            objAlert.showAlert(message: "No Internet Connection", title: "Alert", controller: self)
+        }
+        
+        objWebServiceManager.showIndicator()
+        
+        let dictParam = [
+            "employee_id": self.objJobDetails?.employeeID ?? "",
+            "job_id": self.objJobDetails?.id ?? "",
+            "language": objAppShareData.currentLanguage,
+            "status": "Completed"
+        ]as [String:Any]
+        
+        print(dictParam)
+        
+        objWebServiceManager.requestPost(strURL: WsUrl.url_update_job_status, queryParams: [:], params: dictParam, strCustomValidation: "", showIndicator: false) { (response) in
+            objWebServiceManager.hideIndicator()
+            
+            let status = (response["status"] as? Int)
+            let message = (response["message"] as? String)
+            if status == MessageConstant.k_StatusCode{
+                if let resultArray = response["result"] as? [String: Any] {
+                    objAlert.showAlertSingleButtonCallBack(alertBtn: "OK", title: "Success", message: message ?? "", controller: self) {
+                        self.onBackPressed()
+                    }
+                }
+            }else{
+                objAlert.showAlert(message: message ?? "", title: "Alert", controller: self)
+                
+            }
+        } failure: { (error) in
+            objWebServiceManager.hideIndicator()
+            
+        }
+    }
+    
+    
+    func call_WebService_CreateMileStone(){
+        
+        if !objWebServiceManager.isNetworkAvailable(){
+            objWebServiceManager.hideIndicator()
+            objAlert.showAlert(message: "No Internet Connection", title: "Alert", controller: self)
+        }
+        
+        objWebServiceManager.showIndicator()
+        
+        let dictParam = [
+            "amount": self.tfEnterAmount.text!,
+            "job_id": self.objJobDetails?.id ?? "",
+            "language": objAppShareData.currentLanguage,
+            "currency": "USD"
+        ]as [String:Any]
+        
+        print(dictParam)
+        
+        objWebServiceManager.requestPost(strURL: WsUrl.url_Create_Payment, queryParams: [:], params: dictParam, strCustomValidation: "", showIndicator: false) { (response) in
+            objWebServiceManager.hideIndicator()
+            
+            let status = (response["status"] as? Int)
+            let message = (response["message"] as? String)
+            if status == MessageConstant.k_StatusCode{
+                if let resultArray = response["result"] as? [String: Any] {
+                    objAlert.showAlertSingleButtonCallBack(alertBtn: "OK", title: "Success", message: message ?? "", controller: self) {
+                        self.tfEnterAmount.text = ""
+                        self.subVw.isHidden = true
+                    }
+                }
+            }else{
+                objAlert.showAlert(message: message ?? "", title: "Alert", controller: self)
+                
+            }
+        } failure: { (error) in
+            objWebServiceManager.hideIndicator()
+            
+        }
+    }
+    
+    
+    func call_WebService_MyReviews(strEmployeeID: String){
+        
+        if !objWebServiceManager.isNetworkAvailable() {
+            objWebServiceManager.hideIndicator()
+            objAlert.showAlert(message: "No Internet Connection", title: "Alert", controller: self)
+            return
+        }
+        
+        objWebServiceManager.showIndicator()
+        
+        let dictParam: [String: Any] = [
+            "employee_id": strEmployeeID,
+            "language": objAppShareData.currentLanguage
+        ]
+        
+        print(dictParam)
+        
+        objWebServiceManager.requestPost(
+            strURL: WsUrl.url_get_review,
+            queryParams: [:],
+            params: dictParam,
+            strCustomValidation: "",
+            showIndicator: false
+        ) { response in
+            print(response)
+            objWebServiceManager.hideIndicator()
+            
+            let status = response["status"] as? Int
+            let message = response["message"] as? String
+            
+            if status == MessageConstant.k_StatusCode {
+                
+                if let responseDict = response as? [String: Any] {
+                    print(responseDict)
+                    
+                    if let resultArray = responseDict["result"] as? [[String: Any]] {
+//                        for dataDict in resultArray {
+//                            let review = MyReviewModel(from: dataDict)
+//                            self.arrReviews.append(review)
+//                        }
+                    }
+                    
+//                    if self.arrReviews.isEmpty {
+//                        self.tblvw.displayBackgroundText(text: "No Reviews Available", fontStyle: "ABeeZee-Regular", fontSize: 22)
+//                    } else {
+//                        self.tblvw.displayBackgroundText(text: "")
+//                    }
+                    
+                   // self.tblvw.reloadData()
+                    
+                } else {
+                    objAlert.showAlert(message: message ?? "", title: "Alert", controller: self)
+                }
+                
+            } else {
+                objAlert.showAlert(message: message ?? "", title: "Alert", controller: self)
+            }
+            
+        } failure: { error in
+            objWebServiceManager.hideIndicator()
+            print("Error: \(error)")
+        }
+    }
 }

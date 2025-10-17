@@ -1,35 +1,48 @@
 //
-//  HomeViewController.swift
+//  HomeEmployerViewController.swift
 //  LinkSkill
 //
-//  Created by Rohit Singh Dhakad  [C] on 03/10/25.
+//  Created by Rohit Singh Dhakad  [C] on 15/10/25.
 //
 
 import UIKit
+import SDWebImage
 
-class HomeViewController: UIViewController {
-    
+class HomeEmployerViewController: UIViewController {
+
     @IBOutlet weak var tblVw: UITableView!
+    @IBOutlet weak var vwOpen: UIView!
+    @IBOutlet weak var btnOpen: UIButton!
+    @IBOutlet weak var vwActive: UIView!
+    @IBOutlet weak var btnActive: UIButton!
+    @IBOutlet weak var vwComplete: UIView!
+    @IBOutlet weak var btnComplete: UIButton!
     
     var arrJobs = [JobsModel]()
     var arrMyCategorys: [CategoryModel] = []
     private let refreshControl = UIRefreshControl()
     
+    var strStatus: String = "Pending"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
         setupPullToRefresh()
+        
+        self.vwOpen.backgroundColor = UIColor(named: "AppColor")?.withAlphaComponent(1.0)   // Full color
+        self.vwActive.backgroundColor = UIColor(named: "AppColor")?.withAlphaComponent(0.5)  // 50% opacity
+        self.vwComplete.backgroundColor = UIColor(named: "AppColor")?.withAlphaComponent(0.5)   // Full color
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.call_WebService_GetJobs()
+        self.call_WebService_GetJobs(strStatus: self.strStatus)
     }
     
     private func setupTableView() {
         // Register nib
-        let nib = UINib(nibName: "HomeTableViewCell", bundle: nil)
-        tblVw.register(nib, forCellReuseIdentifier: "HomeTableViewCell")
+        let nib = UINib(nibName: "HomeEmployerTableViewCell", bundle: nil)
+        tblVw.register(nib, forCellReuseIdentifier: "HomeEmployerTableViewCell")
         
         // Set delegates
         tblVw.delegate = self
@@ -49,35 +62,58 @@ class HomeViewController: UIViewController {
     
     @objc private func handleRefresh(_ sender: UIRefreshControl) {
         // ✅ Step 4: Reload data from server
-        self.call_WebService_GetJobs()
+        self.call_WebService_GetJobs(strStatus: self.strStatus)
     }
+
+    @IBAction func btnOnOpen(_ sender: Any) {
+        self.vwOpen.backgroundColor = UIColor(named: "AppColor")?.withAlphaComponent(1.0)
+        self.vwActive.backgroundColor = UIColor(named: "AppColor")?.withAlphaComponent(0.5)
+        self.vwComplete.backgroundColor = UIColor(named: "AppColor")?.withAlphaComponent(0.5)
+        self.strStatus = "Pending"
+        self.call_WebService_GetJobs(strStatus: self.strStatus)
+    }
+    @IBAction func btnActive(_ sender: Any) {
+        self.vwOpen.backgroundColor = UIColor(named: "AppColor")?.withAlphaComponent(0.5)
+        self.vwActive.backgroundColor = UIColor(named: "AppColor")?.withAlphaComponent(1.0)
+        self.vwComplete.backgroundColor = UIColor(named: "AppColor")?.withAlphaComponent(0.5)
+        self.strStatus = "Awarded,Accepted"
+        self.call_WebService_GetJobs(strStatus: self.strStatus)
+    }
+    @IBAction func btnOnComplete(_ sender: Any) {
+        self.vwOpen.backgroundColor = UIColor(named: "AppColor")?.withAlphaComponent(0.5)
+        self.vwActive.backgroundColor = UIColor(named: "AppColor")?.withAlphaComponent(0.5)
+        self.vwComplete.backgroundColor = UIColor(named: "AppColor")?.withAlphaComponent(1.0)
+        self.strStatus = "Completed"
+        self.call_WebService_GetJobs(strStatus: self.strStatus)
+        
+    }
+    
 }
 
 // MARK: - UITableView Delegate & DataSource
-extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
+extension HomeEmployerViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return arrJobs.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTableViewCell", for: indexPath) as? HomeTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "HomeEmployerTableViewCell", for: indexPath) as? HomeEmployerTableViewCell else {
             return UITableViewCell()
         }
         // Configure your cell here
         let obj = arrJobs[indexPath.row]
         
-        cell.lbltitle.text = obj.userName
         let symbol = (obj.currency?.uppercased() == "USD") ? "$" : "€"
         cell.lblEuros.text = "\(symbol)\(obj.price?.formattedPrice ?? "") \(obj.currency ?? "")"
         cell.lblServicetype.text = "\(obj.type ?? "")"
         cell.lblDescription.text = "Description Services: \(obj.details ?? "")"
-        
-        // MARK: - Show/Hide "Already Bid" label
-        if obj.isBided == 1 && obj.status?.caseInsensitiveCompare("Pending") == .orderedSame {
-            cell.vwAlreadyBid.isHidden = false
-        } else {
-            cell.vwAlreadyBid.isHidden = true
+        cell.imgVw.sd_setImage(with: URL(string: obj.employeeImage ?? ""), placeholderImage: UIImage(named: "logo"))
+
+        if self.strStatus == "Awarded,Accepted" || self.strStatus == "Completed"{
+            cell.vwAwardedEmploye.isHidden = false
+        }else{
+            cell.vwAwardedEmploye.isHidden = true
         }
         
         return cell
@@ -86,16 +122,16 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("Tapped on: \(arrJobs[indexPath.row])")
         let vc = mainStoryboard.instantiateViewController(withIdentifier: "JobDetailsViewController")as! JobDetailsViewController
-        vc.isComingFrom = "Employee"
+        vc.isComingFrom = "Employer"
         vc.objJobDetails = arrJobs[indexPath.row]
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 
 
-extension HomeViewController {
+extension HomeEmployerViewController{
     
-    func call_WebService_GetJobs(){
+    func call_WebService_GetJobs(strStatus: String){
         
         if !objWebServiceManager.isNetworkAvailable(){
             objWebServiceManager.hideIndicator()
@@ -105,9 +141,11 @@ extension HomeViewController {
         objWebServiceManager.showIndicator()
         
         let dictParam = [
-            "employee_id": objAppShareData.UserDetail.strUserId!,
+            "user_id": objAppShareData.UserDetail.strUserId!,
             "language": objAppShareData.currentLanguage,
-            "status":"Pending"]as [String:Any]
+            "status": self.strStatus
+        ]as [String:Any]
+        
         print(dictParam)
         
         objWebServiceManager.requestPost(strURL: WsUrl.url_getJobs, queryParams: [:], params: dictParam, strCustomValidation: "", showIndicator: false) { (response) in
@@ -147,15 +185,5 @@ extension HomeViewController {
             print("Error \(error)")
         }
     }
-}
-
-
-extension Double {
-    var formattedPrice: String {
-        if floor(self) == self {
-            return String(format: "%.0f", self)
-        } else {
-            return String(format: "%.2f", self)
-        }
-    }
+    
 }

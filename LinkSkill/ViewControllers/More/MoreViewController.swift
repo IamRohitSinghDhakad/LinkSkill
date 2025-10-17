@@ -39,7 +39,10 @@ extension MoreViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 0 {
-            self.pushVc(viewConterlerId: "MyWalletViewController")
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "MyWalletViewController")as! MyWalletViewController
+            vc.isComingFrom = "Employee"
+            self.navigationController?.pushViewController(vc, animated: true)
+           // self.pushVc(viewConterlerId: "MyWalletViewController")
         } else if indexPath.row == 1 {
             self.pushVc(viewConterlerId: "ServiceHistoryViewController")
         } else if indexPath.row == 2 {
@@ -51,14 +54,18 @@ extension MoreViewController: UITableViewDelegate, UITableViewDataSource {
         } else if indexPath.row == 5 {
             self.pushVc(viewConterlerId: "LanguageViewController")
         } else if indexPath.row == 6 {
-            self.pushVc(viewConterlerId: "ContactUsViewController")
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "ContactUsViewController")as! ContactUsViewController
+            vc.isComingFrom = "Employee"
+            self.navigationController?.pushViewController(vc, animated: true)
         } else if indexPath.row == 7 {
             self.pushVc(viewConterlerId: "PrivacyPolicyViewController")
         } else if indexPath.row == 8 {
             self.pushVc(viewConterlerId: "PrivacyPolicyViewController")
         } else if indexPath.row == 9 {
             // Logout
-           // self.call_WebService_Logout()
+            objAlert.showAlertCallBack(alertLeftBtn: "Yes", alertRightBtn: "No", title: "Logout", message: "Are you sure you want to logout?", controller: self) {
+                objAppShareData.signOut()
+            }
         } else if indexPath.row == 10 {
             // Delete Account
            // self.call_WebService_DeleteAccount()

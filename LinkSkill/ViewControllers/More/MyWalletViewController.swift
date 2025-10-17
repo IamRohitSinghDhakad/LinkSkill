@@ -16,6 +16,7 @@ class MyWalletViewController: UIViewController {
     
     var arrTransactionList:[MyWalletModel] = []
     private let refreshControl = UIRefreshControl()
+    var isComingFrom = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,10 +80,21 @@ extension MyWalletViewController{
         
         objWebServiceManager.showIndicator()
         
-        let dictParam = [
-            "employee_id": objAppShareData.UserDetail.strUserId!,
-            "language": "en"]as [String:Any]
+        var dictParam = [:] as [String:Any]
+        
+        if self.isComingFrom == "Employee"{
+             dictParam = [
+                "employee_id": objAppShareData.UserDetail.strUserId!,
+                "language": "en"]as [String:Any]
+        }else{
+             dictParam = [
+                "user_id": objAppShareData.UserDetail.strUserId!,
+                "language": "en"]as [String:Any]
+        }
+        
         print(dictParam)
+        
+       
         
         objWebServiceManager.requestPost(strURL: WsUrl.url_get_wallet, queryParams: [:], params: dictParam, strCustomValidation: "", showIndicator: false) { (response) in
             objWebServiceManager.hideIndicator()
@@ -97,6 +109,8 @@ extension MyWalletViewController{
                         let obj = MyWalletModel(from: data)
                         self.arrTransactionList.append(obj)
                     }
+                    
+                    self.lblWalletAmount.text = "\(response["total_amount"] as! String)"
                     if self.arrTransactionList.count == 0{
                         self.tblVw.displayBackgroundText(text: "No Transactions Available", fontStyle: "ABeeZee-Regular", fontSize: 22)
                     }else {

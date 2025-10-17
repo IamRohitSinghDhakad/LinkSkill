@@ -13,6 +13,7 @@ class ContactUsViewController: UIViewController {
     @IBOutlet weak var tfEmail: UITextField!
     @IBOutlet weak var txtVwMsg: UITextView!
     
+    var isComingFrom : String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,11 +63,21 @@ extension ContactUsViewController{
         
         objWebServiceManager.showIndicator()
         
-        let dictParam = [
-            "user_id": objAppShareData.UserDetail.strUserId!,
-            "subject": strSubject,
-            "message": strDescription,
-            "language": objAppShareData.currentLanguage]as [String:Any]
+        var dictParam = [:] as [String:Any]
+        
+        if self.isComingFrom == "Employee"{
+            dictParam = [
+                "employee_id": objAppShareData.UserDetail.strUserId!,
+                "subject": strSubject,
+                "message": strDescription,
+                "language": objAppShareData.currentLanguage]as [String:Any]
+        }else{
+            dictParam = [
+                "user_id": objAppShareData.UserDetail.strUserId!,
+                "subject": strSubject,
+                "message": strDescription,
+                "language": objAppShareData.currentLanguage]as [String:Any]
+        }
         print(dictParam)
         
         objWebServiceManager.requestPost(strURL: WsUrl.url_contact_us, queryParams: [:], params: dictParam, strCustomValidation: "", showIndicator: false) { (response) in

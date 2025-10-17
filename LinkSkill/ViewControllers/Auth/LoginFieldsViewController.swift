@@ -124,7 +124,13 @@ extension LoginFieldsViewController {
                     
                     objAppShareData.SaveUpdateUserInfoFromAppshareData(userDetail: resultArray)
                     objAppShareData.fetchUserInfoFromAppshareData()
-                    self.setRootController()
+                    
+                    if objAppShareData.UserDetail.type == "Employee"{
+                        self.setRootController()
+                    }else{
+                        self.setRootControllerEmployer()
+                    }
+                    
                     
                 }
             }else{
@@ -142,6 +148,15 @@ extension LoginFieldsViewController {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let homeViewController = mainStoryboard.instantiateViewController(withIdentifier: "TabBarViewController") as! TabBarViewController
+        let navController = UINavigationController(rootViewController: homeViewController)
+        navController.navigationBar.isHidden = true
+        appDelegate.window?.rootViewController = navController
+    }
+    
+    func setRootControllerEmployer() {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let homeViewController = mainStoryboard.instantiateViewController(withIdentifier: "TabBarEmployerViewController") as! TabBarEmployerViewController
         let navController = UINavigationController(rootViewController: homeViewController)
         navController.navigationBar.isHidden = true
         appDelegate.window?.rootViewController = navController

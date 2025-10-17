@@ -41,10 +41,20 @@ class ViewController: UIViewController {
     func goToNextController() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         if AppSharedData.sharedObject().isLoggedIn {
-            let vc = (self.mainStoryboard.instantiateViewController(withIdentifier: "TabBarViewController") as? TabBarViewController)!
-            let navController = UINavigationController(rootViewController: vc)
-            navController.isNavigationBarHidden = true
-            appDelegate.window?.rootViewController = navController
+            
+            if objAppShareData.UserDetail.type == "Employee" {
+                let vc = (self.mainStoryboard.instantiateViewController(withIdentifier: "TabBarViewController") as? TabBarViewController)!
+                let navController = UINavigationController(rootViewController: vc)
+                navController.isNavigationBarHidden = true
+                appDelegate.window?.rootViewController = navController
+            }else {
+                let vc = (self.mainStoryboard.instantiateViewController(withIdentifier: "TabBarEmployerViewController") as? TabBarEmployerViewController)!
+                let navController = UINavigationController(rootViewController: vc)
+                navController.isNavigationBarHidden = true
+                appDelegate.window?.rootViewController = navController
+            }
+           
+          
         }
         else {
             let vc = (self.mainStoryboard.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController)!
