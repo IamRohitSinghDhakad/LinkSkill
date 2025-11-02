@@ -7,16 +7,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "6185234D-F9A3-4B44-95C3-69E95F4E37CD"
+            uuid = "9849ED8A-1FB1-4EBA-9CE9-ECCB76EB95BC"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "LinkSkill/ViewControllers/Chat/ChatViewController.swift"
+            filePath = "LinkSkill/ViewControllers/More/MyWalletViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "150"
-            endingLineNumber = "150"
-            landmarkName = "call_GetUserList_Api()"
+            startingLineNumber = "114"
+            endingLineNumber = "114"
+            landmarkName = "call_WebService_GetWallet()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

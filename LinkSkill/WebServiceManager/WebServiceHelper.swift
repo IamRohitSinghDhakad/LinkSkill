@@ -31,6 +31,11 @@ struct WsUrl{
     static let url_GetChat = BASE_URL + "get_chat"
     static let url_Create_Payment = BASE_URL + "create_payment"
     static let url_create_job = BASE_URL + "create_job"
+    static let url_GetAccount = BASE_URL + "get_accounts"
+    static let url_SaveAccount = BASE_URL + "save_account"
+    static let url_withdrawal_request = BASE_URL + "withdrawal_request"
+    static let url_PrivacyPolicy = "page?page=Privacy%20Policy&lang=en"
+    static let url_Terms = "page?page=Terms%20Conditions&lang=en"
     
     
   

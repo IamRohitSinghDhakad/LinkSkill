@@ -34,8 +34,14 @@ class ApplyForJobViewController: UIViewController {
         self.lblHeadertitle.text = "Apply for Job"
         self.lblPlaceBidOnTheService.text = "Place a bid on the service"
         self.lblBidAmount.text = "Bid amount"
-        self.lblCurrencySymbol.text = "$"
-        self.lblCurrency.text = "USD"
+        let symbol = (objJobDetails!.currency?.uppercased() == "USD") ? "$" : "€"
+        self.lblCurrencySymbol.text = symbol
+        if symbol == "$"{
+            self.lblCurrency.text = "USD"
+        }else{
+            self.lblCurrency.text = "EUR"
+        }
+        
         
         self.lblHeadertitle.applyStyle(AppFonts.title)
         self.lblPlaceBidOnTheService.applyStyle(AppFonts.title_regular)

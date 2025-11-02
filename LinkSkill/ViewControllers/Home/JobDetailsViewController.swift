@@ -52,6 +52,7 @@ class JobDetailsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.arrServices.removeAll()
         self.setUpUI()
     }
     
@@ -95,7 +96,7 @@ class JobDetailsViewController: UIViewController {
             }
             
             if let status = objJobDetails?.status,
-               (status == "Accepted" || status == "Completed"),
+               (status == "Accepted" || status == "Completed" || status == "Awarded"),
                let employeeName = objJobDetails?.employeeName,
                !employeeName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
                 self.vwAwardedEmployee.isHidden = false
@@ -153,6 +154,8 @@ class JobDetailsViewController: UIViewController {
                 
                 self.vwAwardedEmployee.isHidden = true
                 self.vwAwardedEmployeer.isHidden = false
+            }else if objJobDetails?.status == "Pending"{
+                self.vwCompleted.isHidden = true
             }else{
               //  self.call_WebService_MyReviews(strEmployeeID: objJobDetails?.employeeID ?? "")
                 self.vwApplyForJob.isHidden = true

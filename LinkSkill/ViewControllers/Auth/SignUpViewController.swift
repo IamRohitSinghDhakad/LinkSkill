@@ -69,7 +69,14 @@ extension SignUpViewController {
                     
                     objAppShareData.SaveUpdateUserInfoFromAppshareData(userDetail: resultArray)
                     objAppShareData.fetchUserInfoFromAppshareData()
-                    self.setRootController()
+                    
+                    if self.strType == UserInfoType.Employee.rawValue{
+                        self.setRootController()
+                    }else{
+                        self.setRootControllerEmployer()
+                    }
+                    
+                    
                     
                 }
             }else{
@@ -87,6 +94,15 @@ extension SignUpViewController {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let homeViewController = mainStoryboard.instantiateViewController(withIdentifier: "TabBarViewController") as! TabBarViewController
+        let navController = UINavigationController(rootViewController: homeViewController)
+        navController.navigationBar.isHidden = true
+        appDelegate.window?.rootViewController = navController
+    }
+    
+    func setRootControllerEmployer() {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let homeViewController = mainStoryboard.instantiateViewController(withIdentifier: "TabBarEmployerViewController") as! TabBarEmployerViewController
         let navController = UINavigationController(rootViewController: homeViewController)
         navController.navigationBar.isHidden = true
         appDelegate.window?.rootViewController = navController

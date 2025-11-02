@@ -21,7 +21,8 @@ class ChatDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBOutlet weak var vwBlocked: UIView!
     @IBOutlet weak var lblBlockMessage: UILabel!
     @IBOutlet weak var vwClearConversation: UIView!
-    
+    @IBOutlet weak var vwImage: UIView!
+    @IBOutlet weak var imgVw: UIImageView!
     @IBOutlet weak var btnAddMedia: UIButton!
     
     let txtViewCommentMaxHeight: CGFloat = 100
@@ -45,6 +46,7 @@ class ChatDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
         self.vwBlocked.isHidden = true
+        self.vwImage.isHidden = true
         self.lblUserame.text = self.strUsername
         tblChatList.delegate = self
         tblChatList.dataSource = self
@@ -99,6 +101,11 @@ class ChatDetailViewController: UIViewController, UITableViewDelegate, UITableVi
             self.call_ClearConversation(strUserID: objAppShareData.UserDetail.strUserId ?? "", strProductID: self.strJobId)
         }
     }
+    
+    @IBAction func btnCloseImageVw(_ sender: Any) {
+        self.vwImage.isHidden = true
+    }
+    
     
     @IBAction func btnOnBlockUser(_ sender: Any) {
         
@@ -237,6 +244,7 @@ class ChatDetailViewController: UIViewController, UITableViewDelegate, UITableVi
                 cell.lblTimeImageMySide.text = obj.strOpponentChatTime
                 if let imgURL = URL(string: obj.strImageUrl) {
                     cell.imgVwMy.sd_setImage(with: imgURL, placeholderImage: UIImage(named: "placeholder"))
+                    
                 }
                 
             } else if obj.strType == "file" {
@@ -248,6 +256,17 @@ class ChatDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         }
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let obj = self.arrChatMsg[indexPath.row]
+        
+        if obj.strType == "image" {
+            if let imgURL = URL(string: obj.strImageUrl) {
+                self.imgVw.sd_setImage(with: imgURL, placeholderImage: UIImage(named: "placeholder"))
+            }
+            self.vwImage.isHidden = false
+        }
     }
     
     @objc func openDocument(_ sender: UIButton) {
@@ -1034,3 +1053,4 @@ extension ChatDetailViewController: UIDocumentPickerDelegate{
 
     
 }
+

@@ -44,9 +44,13 @@ extension MoreEmployerViewController: UITableViewDelegate, UITableViewDataSource
         } else if indexPath.row == 2 {
             self.pushVc(viewConterlerId: "ContactUsViewController")
         } else if indexPath.row == 3 {
-            self.pushVc(viewConterlerId: "PrivacyPolicyViewController")
+            let vc = self.mainStoryboard.instantiateViewController(withIdentifier: "PrivacyPolicyViewController")as! PrivacyPolicyViewController
+            vc.isComingfrom = "Privacy Policy"
+            self.navigationController?.pushViewController(vc, animated: true)
         } else if indexPath.row == 4 {
-            self.pushVc(viewConterlerId: "PrivacyPolicyViewController")
+            let vc = self.mainStoryboard.instantiateViewController(withIdentifier: "PrivacyPolicyViewController")as! PrivacyPolicyViewController
+            vc.isComingfrom = "Terms"
+            self.navigationController?.pushViewController(vc, animated: true)
         } else if indexPath.row == 5 {
             // Logout
             objAlert.showAlertCallBack(alertLeftBtn: "Yes", alertRightBtn: "No", title: "Logout", message: "Are you sure you want to logout?", controller: self) {

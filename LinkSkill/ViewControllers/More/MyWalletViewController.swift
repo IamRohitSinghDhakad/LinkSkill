@@ -47,7 +47,9 @@ class MyWalletViewController: UIViewController {
     }
     
     @IBAction func btnOnWithdrawl(_ sender: UIButton) {
-        
+        let vc = self.mainStoryboard.instantiateViewController(withIdentifier: "AddBankDetailViewController")as! AddBankDetailViewController
+        vc.strAmount = self.lblWalletAmount.text!
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 
@@ -109,7 +111,7 @@ extension MyWalletViewController{
                         let obj = MyWalletModel(from: data)
                         self.arrTransactionList.append(obj)
                     }
-                    
+                    print("\(response["total_amount"] as! String)")
                     self.lblWalletAmount.text = "\(response["total_amount"] as! String)"
                     if self.arrTransactionList.count == 0{
                         self.tblVw.displayBackgroundText(text: "No Transactions Available", fontStyle: "ABeeZee-Regular", fontSize: 22)

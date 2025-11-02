@@ -26,9 +26,17 @@ class AddPostViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.subVw.isHidden = true
+        
         tfSearch.addTarget(self, action: #selector(searchTextChanged(_:)), for: .editingChanged)
+        
+        // Disable direct typing and add tap gesture to open action sheet
+        tfCurrency.delegate = self
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(currencyFieldTapped))
+        tfCurrency.addGestureRecognizer(tapGesture)
+        
         call_WebService_GetCategory()
     }
+
     
     @IBAction func btnOnSkills(_ sender: Any) {
         self.subVw.isHidden = false
@@ -38,6 +46,34 @@ class AddPostViewController: UIViewController {
         if validateFields() {
             self.call_WebService_AddPost()
         }
+    }
+    
+    @objc private func currencyFieldTapped() {
+        view.endEditing(true) // dismiss keyboard if any
+        
+        let alert = UIAlertController(title: "Select Currency", message: nil, preferredStyle: .actionSheet)
+        
+        let usdAction = UIAlertAction(title: "USD", style: .default) { _ in
+            self.tfCurrency.text = "USD"
+        }
+        
+        let eurAction = UIAlertAction(title: "EUR", style: .default) { _ in
+            self.tfCurrency.text = "EUR"
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        
+        alert.addAction(usdAction)
+        alert.addAction(eurAction)
+        alert.addAction(cancelAction)
+        
+        // For iPad support
+        if let popoverController = alert.popoverPresentationController {
+            popoverController.sourceView = tfCurrency
+            popoverController.sourceRect = tfCurrency.bounds
+        }
+        
+        present(alert, animated: true)
     }
     
     
@@ -192,7 +228,7 @@ extension AddPostViewController{
             if status == MessageConstant.k_StatusCode{
                 if let resultArray = response["result"] as? [String: Any] {
                     objAlert.showAlertSingleButtonCallBack(alertBtn: "OK", title: "Success", message: message ?? "", controller: self) {
-                        self.onBackPressed()
+                        self.setRootController()
                     }
                 }
             }else{
@@ -203,6 +239,15 @@ extension AddPostViewController{
             objWebServiceManager.hideIndicator()
             
         }
+    }
+    
+    func setRootController() {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let homeViewController = mainStoryboard.instantiateViewController(withIdentifier: "TabBarEmployerViewController") as! TabBarEmployerViewController
+        let navController = UINavigationController(rootViewController: homeViewController)
+        navController.navigationBar.isHidden = true
+        appDelegate.window?.rootViewController = navController
     }
     
     
@@ -242,4 +287,15 @@ extension AddPostViewController{
            }
        }
     
+}
+
+
+extension AddPostViewController {
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        if textField == tfCurrency {
+            currencyFieldTapped()
+            return false // prevent keyboard
+        }
+        return true
+    }
 }

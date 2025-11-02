@@ -58,9 +58,17 @@ extension MoreViewController: UITableViewDelegate, UITableViewDataSource {
             vc.isComingFrom = "Employee"
             self.navigationController?.pushViewController(vc, animated: true)
         } else if indexPath.row == 7 {
-            self.pushVc(viewConterlerId: "PrivacyPolicyViewController")
+            
+            let vc = self.mainStoryboard.instantiateViewController(withIdentifier: "PrivacyPolicyViewController")as! PrivacyPolicyViewController
+            vc.isComingfrom = "Privacy Policy"
+            self.navigationController?.pushViewController(vc, animated: true)
+            
         } else if indexPath.row == 8 {
-            self.pushVc(viewConterlerId: "PrivacyPolicyViewController")
+            
+            let vc = self.mainStoryboard.instantiateViewController(withIdentifier: "PrivacyPolicyViewController")as! PrivacyPolicyViewController
+            vc.isComingfrom = "Terms"
+            self.navigationController?.pushViewController(vc, animated: true)
+            
         } else if indexPath.row == 9 {
             // Logout
             objAlert.showAlertCallBack(alertLeftBtn: "Yes", alertRightBtn: "No", title: "Logout", message: "Are you sure you want to logout?", controller: self) {

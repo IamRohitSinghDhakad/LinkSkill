@@ -22,7 +22,7 @@ class ServiceHistoryViewController: UIViewController {
         self.vwAccepted.backgroundColor = UIColor(named: "AppColor")?.withAlphaComponent(1.0)   // Full color
         self.vwCompleted.backgroundColor = UIColor(named: "AppColor")?.withAlphaComponent(0.5)  // 50% opacity
         setupTableView()
-        call_WebService_ServiceHistory(strStatus: "Accepted")
+        call_WebService_ServiceHistory(strStatus: "Accepted,Awarded")
     }
     
     private func setupTableView() {
@@ -45,7 +45,7 @@ class ServiceHistoryViewController: UIViewController {
     @IBAction func btnAccepted(_ sender: Any) {
         vwAccepted.backgroundColor = UIColor(named: "AppColor")?.withAlphaComponent(1.0)   // Full color
         vwCompleted.backgroundColor = UIColor(named: "AppColor")?.withAlphaComponent(0.5)  // 50% opacity
-        call_WebService_ServiceHistory(strStatus: "Accepted")
+        call_WebService_ServiceHistory(strStatus: "Accepted,Awarded")
     }
     
     @IBAction func btnCompleted(_ sender: Any) {
