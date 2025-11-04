@@ -14,6 +14,7 @@ class CategoryModel: NSObject {
     var image: String?
     var status: Int?
     var isSelected: Int?
+    var isSelectedCell: Bool = false
     var entryDate: String?
     
     init(from dictionary: [String: Any]) {

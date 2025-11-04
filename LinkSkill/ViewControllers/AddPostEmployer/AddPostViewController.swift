@@ -126,7 +126,7 @@ class AddPostViewController: UIViewController {
         self.subVw.isHidden = true
     }
     @IBAction func btnOnDOne(_ sender: Any) {
-        let selected = arrCategory.filter { $0.isSelected == 1 }
+        let selected = arrCategory.filter { $0.isSelectedCell == true }
         
         // Get comma-separated strings
         selectedIds = selected.compactMap { $0.id }.joined(separator: ",")
@@ -172,7 +172,7 @@ extension AddPostViewController: UITableViewDelegate, UITableViewDataSource{
         
         let obj = filteredCategory[indexPath.row]
         cell.lblName.text = obj.name
-        cell.imgVwTick.isHidden = (obj.isSelected == 0)
+        cell.imgVwTick.isHidden = !obj.isSelectedCell
         return cell
     }
     
@@ -181,13 +181,13 @@ extension AddPostViewController: UITableViewDelegate, UITableViewDataSource{
         let selectedObj = filteredCategory[indexPath.row]
         
         // Toggle its selection state
-        selectedObj.isSelected = (selectedObj.isSelected == 1) ? 0 : 1
+        selectedObj.isSelectedCell.toggle() //= (selectedObj.isSelected == 1) ? 0 : 1
         
         // Update both filtered and main array consistently
         filteredCategory[indexPath.row] = selectedObj
         
         if let indexInMain = arrCategory.firstIndex(where: { $0.id == selectedObj.id }) {
-            arrCategory[indexInMain].isSelected = selectedObj.isSelected
+            arrCategory[indexInMain].isSelectedCell = selectedObj.isSelectedCell
         }
         
         // Reload only this cell for smooth performance
@@ -210,7 +210,7 @@ extension AddPostViewController{
         let dictParam = [
             "user_id": objAppShareData.UserDetail.strUserId ?? "",
             "type": self.tfServiceType.text!,
-            "category_id": "",
+            "category_id": selectedIds,
             "price": self.tfPrice.text!,
             "currency": self.tfCurrency.text!,
             "details": self.txtVwJobDetails.text!,

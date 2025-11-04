@@ -171,7 +171,9 @@ extension HomeEmployerViewController{
                     self.tblVw.reloadData()
                 }
             }else{
-                objAlert.showAlert(message: message ?? "", title: "Alert", controller: self)
+                self.arrJobs.removeAll()
+                self.tblVw.reloadData()
+                //objAlert.showAlert(message: message ?? "", title: "Alert", controller: self)
                 self.refreshControl.endRefreshing()
                 if self.arrJobs.count == 0{
                     self.tblVw.displayBackgroundText(text: "No Jobs Available", fontStyle: "ABeeZee-Regular", fontSize: 22)
@@ -180,6 +182,8 @@ extension HomeEmployerViewController{
                 }
             }
         } failure: { (error) in
+            self.arrJobs.removeAll()
+            self.tblVw.reloadData()
             objWebServiceManager.hideIndicator()
             self.refreshControl.endRefreshing()
             print("Error \(error)")

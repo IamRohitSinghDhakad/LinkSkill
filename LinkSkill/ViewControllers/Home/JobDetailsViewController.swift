@@ -143,30 +143,24 @@ class JobDetailsViewController: UIViewController {
                 self.vwApplyForJob.isHidden = false
                 self.imgVwAwardedEmployee.sd_setImage(with: URL(string: objJobDetails?.employeeImage ?? ""), placeholderImage: UIImage(named: "logo"))
                 self.lblEmployeeAwardedName.text = objJobDetails?.employeeName
-                
                 self.vwAwardedEmployee.isHidden = false
                 self.vwAwardedEmployeer.isHidden = true
-                
             }else if objJobDetails?.status == "Accepted"{
                 self.vwApplyForJob.isHidden = true
                 self.imgVwAwardedEmployer.sd_setImage(with: URL(string: objJobDetails?.employeeImage ?? ""), placeholderImage: UIImage(named: "logo"))
                 self.lblNameEmployerAwardedName.text = objJobDetails?.employeeName
-                
                 self.vwAwardedEmployee.isHidden = true
                 self.vwAwardedEmployeer.isHidden = false
             }else if objJobDetails?.status == "Pending"{
                 self.vwCompleted.isHidden = true
             }else{
-              //  self.call_WebService_MyReviews(strEmployeeID: objJobDetails?.employeeID ?? "")
+                self.call_WebService_MyReviews(strEmployeeID: objJobDetails?.employeeID ?? "")
                 self.vwApplyForJob.isHidden = true
                 self.vwCompleted.isHidden = false
                 self.imgVwEmployeeCompleted.sd_setImage(with: URL(string: objJobDetails?.employeeImage ?? ""), placeholderImage: UIImage(named: "logo"))
                 self.lblEmployeeNameCompleted.text = objJobDetails?.employeeName
                 self.ratingVwCompletedEmployee.rating = 3.5
-                //self.lblCommentEmployeeCompleted.text =  ""
-                
             }
-            
         }
     }
     
@@ -207,7 +201,9 @@ class JobDetailsViewController: UIViewController {
     }
     
     @IBAction func btnOnMarkAsComplete(_ sender: Any) {
-        self.call_WebService_UpdaetJobStatus()
+        let vc = self.mainStoryboard.instantiateViewController(withIdentifier: "ReviewRatingViewController")as! ReviewRatingViewController
+        vc.objJobDetails = self.objJobDetails
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     @IBAction func btnOnCloseSubve(_ sender: Any) {
@@ -215,7 +211,9 @@ class JobDetailsViewController: UIViewController {
     }
     
     @IBAction func btnOnCreateMileStone(_ sender: Any) {
-        
+        if ((self.tfEnterAmount.text?.isEmpty) != nil){
+            self.call_WebService_CreateMileStone()
+        }
     }
 }
 
@@ -301,7 +299,7 @@ extension JobDetailsViewController {
             "amount": self.tfEnterAmount.text!,
             "job_id": self.objJobDetails?.id ?? "",
             "language": objAppShareData.currentLanguage,
-            "currency": "USD"
+            "currency": objJobDetails?.currency ?? ""
         ]as [String:Any]
         
         print(dictParam)
@@ -360,7 +358,7 @@ extension JobDetailsViewController {
             let message = response["message"] as? String
             
             if status == MessageConstant.k_StatusCode {
-                
+                print(response)
                 if let responseDict = response as? [String: Any] {
                     print(responseDict)
                     

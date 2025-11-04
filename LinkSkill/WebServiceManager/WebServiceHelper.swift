@@ -36,8 +36,6 @@ struct WsUrl{
     static let url_withdrawal_request = BASE_URL + "withdrawal_request"
     static let url_PrivacyPolicy = "page?page=Privacy%20Policy&lang=en"
     static let url_Terms = "page?page=Terms%20Conditions&lang=en"
-    
-    
   
     static let url_ReportUser = BASE_URL + "report_user"
     static let url_BlockUser = BASE_URL + "block_user"
@@ -46,8 +44,7 @@ struct WsUrl{
     static let url_clearConversation = BASE_URL + "clear_conversation"
     static let url_get_bids = BASE_URL + "get_bids"
     static let url_update_job_status = BASE_URL + "update_job_status"
-    
-    
+    static let url_review_rating = BASE_URL + "review_rating"
     
     static let url_getConfirmationStatus  = BASE_URL + "update_confirmation_status"
     static let url_extendMissionTime  = BASE_URL + "extend_time"
