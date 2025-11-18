@@ -27,6 +27,8 @@ class JobsModel: NSObject {
     var employeeName: String?
     var employeeImage: String?
     var entryDate: String?
+    var strRating :Double?
+    var strReview: String?
     var isSelected: Bool = false
     
     init(from dictionary: [String: Any]) {
@@ -78,6 +80,16 @@ class JobsModel: NSObject {
             price = 0.0
         }
         
+        if let value = dictionary["rating"] as? Double {
+            strRating = value
+        } else if let value = dictionary["rating"] as? Int {
+            strRating = Double(value)
+        } else if let value = dictionary["rating"] as? String, let doubleVal = Double(value) {
+            strRating = doubleVal
+        } else {
+            strRating = 0.0
+        }
+        
         // MARK: - Status
         if let value = dictionary["status"] as? String {
             status = value
@@ -115,6 +127,12 @@ class JobsModel: NSObject {
             paymentID = value
         } else {
             paymentID = ""
+        }
+        
+        if let value = dictionary["review"] as? String {
+            strReview = value
+        } else {
+            strReview = ""
         }
         
         // MARK: - User ID

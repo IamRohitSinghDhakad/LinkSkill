@@ -164,30 +164,36 @@ class ChatDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     
     @IBAction func btnOnAddMedia(_ sender: Any) {
         let actionSheet = UIAlertController(title: "Choose Option", message: nil, preferredStyle: .actionSheet)
-        
-        // MARK: - Image Selection
-        actionSheet.addAction(UIAlertAction(title: "Choose Image", style: .default, handler: { _ in
-            MediaPicker.shared.pickMedia(from: self) { image, dict in
-                self.pickedImage = image
-                self.call_SendImageMessageonly()
+            
+            // MARK: - Image Selection
+            actionSheet.addAction(UIAlertAction(title: "Choose Image", style: .default) { _ in
+                MediaPicker.shared.pickMedia(from: self) { image, dict in
+                    self.pickedImage = image
+                    self.call_SendImageMessageonly()
+                }
+            })
+            
+            // MARK: - Document Selection
+            actionSheet.addAction(UIAlertAction(title: "Choose Document", style: .default) { _ in
+                self.openDocumentPicker()
+            })
+            
+            // MARK: - Cancel
+            actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            
+            // Only set popover for iPad
+            if let popover = actionSheet.popoverPresentationController {
+                if UIDevice.current.userInterfaceIdiom == .pad {
+                    popover.sourceView = self.view
+                    popover.sourceRect = CGRect(x: self.view.bounds.midX,
+                                                y: self.view.bounds.midY,
+                                                width: 0,
+                                                height: 0)
+                    popover.permittedArrowDirections = []
+                }
             }
-        }))
-        
-        // MARK: - Document Selection
-        actionSheet.addAction(UIAlertAction(title: "Choose Document", style: .default, handler: { _ in
-            self.openDocumentPicker()
-        }))
-        
-        // MARK: - Cancel
-        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        
-        // For iPad support
-        if let popoverController = actionSheet.popoverPresentationController {
-            popoverController.sourceView = self.view
-            popoverController.sourceRect = (sender as AnyObject).frame
-        }
-        
-        self.present(actionSheet, animated: true)
+            
+            self.present(actionSheet, animated: true)
     }
     
     
@@ -920,10 +926,11 @@ extension ChatDetailViewController{
         }
     }
     
-    //MARK:  Send Image Message Only
-    func call_SendImageMessageonly(){
+    // MARK: Send Image Message Only
+    func call_SendImageMessageonly() {
         
-        if !objWebServiceManager.isNetworkAvailable(){
+        // Network Check
+        guard objWebServiceManager.isNetworkAvailable() else {
             objWebServiceManager.hideIndicator()
             objAlert.showAlert(message: "No Internet Connection", title: "Alert", controller: self)
             return
@@ -931,48 +938,54 @@ extension ChatDetailViewController{
         
         objWebServiceManager.showIndicator()
         
-        var imageData = [Data]()
-        var imgData : Data?
-        if self.pickedImage != nil{
-            imgData = (self.pickedImage?.jpegData(compressionQuality: 0.2))!
-        }
-        
-        imageData.append(imgData!)
-        
-        let imageParam = ["chat_image"]
-        
-        
-        let dicrParam = ["receiver_id":self.strSenderId,//Opponent ID
-                         "sender_id":self.strReceiverId,// My ID
-                         "job_id":"",
-                         "type":"image"
-                         
-        ]as [String:Any]
-        
-        objWebServiceManager.uploadMultipartWithImagesData(strURL: WsUrl.url_InsertChat, params: dicrParam, showIndicator: true, customValidation: "", imageData: imgData, imageToUpload: imageData, imagesParam: imageParam, fileName: "chat_image", mimeType: "image/jpeg") { (response) in
+        // Image Data Check
+        guard let pickedImage = self.pickedImage,
+              let imgData = pickedImage.jpegData(compressionQuality: 0.2),
+              !imgData.isEmpty else {
             
             objWebServiceManager.hideIndicator()
-            _ = (response["status"] as? Int)
-            _ = (response["message"] as? String)
+            objAlert.showAlert(message: "Unable to send image. Please select a valid image.", title: "Alert", controller: self)
+            return
+        }
+        
+        let imageDataArray = [imgData]
+        let imageParam = ["chat_image"]
+        
+        let dicrParam: [String: Any] = [
+            "receiver_id": self.strSenderId,   // Opponent ID
+            "sender_id": self.strReceiverId,   // My ID
+            "job_id": "",
+            "type": "image"
+        ]
+        
+        objWebServiceManager.uploadMultipartWithImagesData(
+            strURL: WsUrl.url_InsertChat,
+            params: dicrParam,
+            showIndicator: true,
+            customValidation: "",
+            imageData: imgData,
+            imageToUpload: imageDataArray,
+            imagesParam: imageParam,
+            fileName: "chat_image",
+            mimeType: "image/jpeg"
+        ) { response in
             
-            print(response)
+            objWebServiceManager.hideIndicator()
             
-            if let result = response["result"]as? String{
-                if result == "successful"{
+            if let result = response["result"] as? String {
+                if result == "successful" {
                     self.initilizeFirstTimeOnly = false
-                }else{
+                } else {
                     objAlert.showAlert(message: "Inappropriate content detected. Please modify your message.".localized(), controller: self)
                 }
-            }else{
-                objWebServiceManager.hideIndicator()
-                
             }
             
-        } failure: { (Error) in
-            print(Error)
+        } failure: { error in
+            print(error)
             objWebServiceManager.hideIndicator()
         }
     }
+
     
     //MARK: Send Document Only
     func call_SendDocumentMessageonly(documentURL: URL){

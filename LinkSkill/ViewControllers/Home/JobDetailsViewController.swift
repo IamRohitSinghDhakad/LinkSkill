@@ -154,12 +154,13 @@ class JobDetailsViewController: UIViewController {
             }else if objJobDetails?.status == "Pending"{
                 self.vwCompleted.isHidden = true
             }else{
-                self.call_WebService_MyReviews(strEmployeeID: objJobDetails?.employeeID ?? "")
                 self.vwApplyForJob.isHidden = true
                 self.vwCompleted.isHidden = false
                 self.imgVwEmployeeCompleted.sd_setImage(with: URL(string: objJobDetails?.employeeImage ?? ""), placeholderImage: UIImage(named: "logo"))
                 self.lblEmployeeNameCompleted.text = objJobDetails?.employeeName
-                self.ratingVwCompletedEmployee.rating = 3.5
+                self.ratingVwCompletedEmployee.rating = objJobDetails?.strRating ?? 0.0
+                self.ratingVwCompletedEmployee.isUserInteractionEnabled = false
+                self.lblCommentEmployeeCompleted.text = objJobDetails?.strReview
             }
         }
     }

@@ -17,13 +17,13 @@ class LoginFieldsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if self.strType == UserInfoType.Employee.rawValue{
-            self.tfEmail.text = "employee@gmail.com"
-            self.tfPassword.text = "12345"
-        }else{
-            self.tfEmail.text = "employer@gmail.com"
-            self.tfPassword.text = "12345"
-        }
+//        if self.strType == UserInfoType.Employee.rawValue{
+//            self.tfEmail.text = "employee@gmail.com"
+//            self.tfPassword.text = "12345"
+//        }else{
+//            self.tfEmail.text = "employer@gmail.com"
+//            self.tfPassword.text = "12345"
+//        }
     }
     
     @IBAction func btnOnBack(_ sender: Any) {

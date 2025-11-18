@@ -80,7 +80,7 @@ extension AddBankDetailViewController{
                     self.tfAccountHolderName.text = obj.str_holder_name
                 }
             }else{
-                objAlert.showAlert(message: message ?? "", title: "Alert", controller: self)
+               // objAlert.showAlert(message: message ?? "", title: "Alert", controller: self)
             }
         } failure: { (error) in
             objWebServiceManager.hideIndicator()
