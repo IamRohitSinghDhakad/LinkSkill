@@ -65,11 +65,14 @@ extension ProposalViewController: UITableViewDelegate, UITableViewDataSource {
     @objc func btnOnChatTapped(_ sender: UIButton) {
         let index = sender.tag
         let selectedObj = arrBidProposalModel[index]
-        
-        // ✅ Create instance of your chat view controller
-        let chatVC = self.storyboard?.instantiateViewController(withIdentifier: "ChatDetailViewController") as! ChatDetailViewController
-        
-        self.navigationController?.pushViewController(chatVC, animated: true)
+    
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "ChatDetailViewController") as! ChatDetailViewController
+        vc.strReceiverId = objAppShareData.UserDetail.strUserId ?? ""
+        vc.strSenderId = self.arrBidProposalModel[index].employeeId ?? ""
+        vc.strJobId = self.arrBidProposalModel[index].jobId ?? ""
+        vc.strUsername = self.arrBidProposalModel[index].employeeName ?? ""
+       // vc.isBlocked = self.arrBidProposalModel[index].strBlocked
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 
 }

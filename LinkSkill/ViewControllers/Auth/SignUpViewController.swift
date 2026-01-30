@@ -30,7 +30,59 @@ class SignUpViewController: UIViewController {
     
 
     @IBAction func btnOnRegister(_ sender: Any) {
-        
+        if validateFields() {
+                call_Websercice_SignUp()
+            }
+    }
+}
+
+extension SignUpViewController {
+
+    func validateFields() -> Bool {
+
+        // Username
+        guard let name = tfUserName.text, !name.isEmpty else {
+            objAlert.showAlert(message: "Please enter your name.", title: "Alert", controller: self)
+            return false
+        }
+
+        // Email
+        guard let email = tfEmail.text, !email.isEmpty else {
+            objAlert.showAlert(message: "Please enter your email.", title: "Alert", controller: self)
+            return false
+        }
+
+        if !isValidEmail(email) {
+            objAlert.showAlert(message: "Please enter a valid email.", title: "Alert", controller: self)
+            return false
+        }
+
+        // Mobile
+        guard let mobile = tfMobile.text, !mobile.isEmpty else {
+            objAlert.showAlert(message: "Please enter mobile number.", title: "Alert", controller: self)
+            return false
+        }
+
+
+        // Password
+        guard let password = tfPassword.text, !password.isEmpty else {
+            objAlert.showAlert(message: "Please enter password.", title: "Alert", controller: self)
+            return false
+        }
+
+
+        // Address
+        guard let address = tfAddress.text, !address.isEmpty else {
+            objAlert.showAlert(message: "Please enter address.", title: "Alert", controller: self)
+            return false
+        }
+
+        return true
+    }
+
+    func isValidEmail(_ email: String) -> Bool {
+        let regex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
+        return NSPredicate(format: "SELF MATCHES %@", regex).evaluate(with: email)
     }
 }
 

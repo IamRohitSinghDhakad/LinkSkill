@@ -390,7 +390,7 @@ extension ChatDetailViewController: UITextViewDelegate{
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
-        return newText.count <= 150
+        return newText.count <= 550
     }
     
     
@@ -452,7 +452,7 @@ extension ChatDetailViewController{
             return
         }
         
-        //  objWebServiceManager.showIndicator()
+      
         
         let parameter = ["login_user_id" : objAppShareData.UserDetail.strUserId ?? "", "language":objAppShareData.currentLanguage] as [String:Any]
         
@@ -954,7 +954,7 @@ extension ChatDetailViewController{
         let dicrParam: [String: Any] = [
             "receiver_id": self.strSenderId,   // Opponent ID
             "sender_id": self.strReceiverId,   // My ID
-            "job_id": "",
+            "job_id": self.strJobId,
             "type": "image"
         ]
         
