@@ -21,6 +21,7 @@ class ProfileEmployerViewController: UIViewController,UINavigationControllerDele
     @IBOutlet weak var tfCity: UITextField!
     @IBOutlet weak var tfPin: UITextField!
     @IBOutlet weak var tfAddress: UITextField!
+    @IBOutlet weak var btnSave: UIButton!
     
     var objUser = UserModel(from: [:])
     var imagePicker = UIImagePickerController()
@@ -28,6 +29,8 @@ class ProfileEmployerViewController: UIViewController,UINavigationControllerDele
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.btnSave.setLocalizedTitle(L10n.save)
         
         self.call_WebService_Profile()
     }
@@ -54,47 +57,47 @@ class ProfileEmployerViewController: UIViewController,UINavigationControllerDele
            
            // Validate step by step for better UX messages
            guard !name.isEmpty else {
-               objAlert.showAlert(message: "Please enter your name.", title: "Alert", controller: self)
+               objAlert.showAlert(message: L10n.enterYourName, title: "", controller: self)
                return
            }
            guard !email.isEmpty else {
-               objAlert.showAlert(message: "Please enter your email.", title: "Alert", controller: self)
+               objAlert.showAlert(message: L10n.enterYourEmail, title: "", controller: self)
                return
            }
         guard isValidEmail(email) else {
-               objAlert.showAlert(message: "Please enter a valid email address.", title: "Alert", controller: self)
+            objAlert.showAlert(message: L10n.enterYourEmail, title: "", controller: self)
                return
            }
            guard !mobile.isEmpty else {
-               objAlert.showAlert(message: "Please enter your mobile number.", title: "Alert", controller: self)
+               objAlert.showAlert(message: L10n.enterYourMobile, title: "", controller: self)
                return
            }
            guard !rate.isEmpty else {
-               objAlert.showAlert(message: "Please enter your rate.", title: "Alert", controller: self)
+               objAlert.showAlert(message: L10n.enterServiceRate, title: "", controller: self)
                return
            }
            guard !country.isEmpty else {
-               objAlert.showAlert(message: "Please enter your country.", title: "Alert", controller: self)
+               objAlert.showAlert(message: L10n.enterYourCountry, title: "", controller: self)
                return
            }
            guard !state.isEmpty else {
-               objAlert.showAlert(message: "Please enter your state.", title: "Alert", controller: self)
+               objAlert.showAlert(message: L10n.enterYourState, title: "", controller: self)
                return
            }
            guard !city.isEmpty else {
-               objAlert.showAlert(message: "Please enter your city.", title: "Alert", controller: self)
+               objAlert.showAlert(message: L10n.enterYourCity, title: "", controller: self)
                return
            }
            guard !pin.isEmpty else {
-               objAlert.showAlert(message: "Please enter your pin code.", title: "Alert", controller: self)
+               objAlert.showAlert(message: L10n.enterYourZip, title: "", controller: self)
                return
            }
            guard !address.isEmpty else {
-               objAlert.showAlert(message: "Please enter your address.", title: "Alert", controller: self)
+               objAlert.showAlert(message: L10n.enterYourAddress, title: "", controller: self)
                return
            }
            
-           // ✅ All validations passed — proceed with API call
+           //  All validations passed — proceed with API call
            callWebserviceForUpdateProfile()
     }
     

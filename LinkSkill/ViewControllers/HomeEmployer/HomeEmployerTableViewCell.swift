@@ -16,9 +16,14 @@ class HomeEmployerTableViewCell: UITableViewCell {
     @IBOutlet weak var vwAwardedEmploye: UIView!
     @IBOutlet weak var lblEmployeeName: UILabel!
     @IBOutlet weak var imgVwBriefcase: UIImageView!
+    @IBOutlet weak var lblServiceTypHead: UILabel!
+    @IBOutlet weak var lblPricehead: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        self.lblServiceTypHead.text = L10n.serviceType
+        self.lblPricehead.text = L10n.price
         
         lblServicetype.applyStyle(AppFonts.subtitle)
         lblDescription.applyStyle(AppFonts.subtitle)

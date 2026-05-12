@@ -10,6 +10,9 @@ import UIKit
 class ForgetPasswordViewController: UIViewController {
 
     @IBOutlet weak var tfEmail: UITextField!
+    @IBOutlet weak var lblForgetPassword: UILabel!
+    @IBOutlet weak var lblDesc: UILabel!
+    @IBOutlet weak var btnSubmit: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()

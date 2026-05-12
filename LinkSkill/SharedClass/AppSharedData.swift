@@ -43,18 +43,24 @@ class AppSharedData: NSObject {
             if let savedLang = UserDefaults.standard.string(forKey: UserDefaults.KeysDefault.currentLanguage) {
                 return savedLang
             }
-            
-            // Get system language code only (e.g., "en", "fr", "hi")
+
             if let preferred = Locale.preferredLanguages.first {
                 let languageCode = Locale(identifier: preferred).languageCode ?? "en"
                 return languageCode
             }
-            
+
             return "en"
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: UserDefaults.KeysDefault.currentLanguage)
+
+            UserDefaults.standard.set(newValue,
+                                      forKey: UserDefaults.KeysDefault.currentLanguage)
+
+            UserDefaults.standard.set([newValue], forKey: "AppleLanguages")
+
             UserDefaults.standard.synchronize()
+
+            Bundle.setLanguage(newValue)
         }
     }
 

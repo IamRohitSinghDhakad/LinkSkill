@@ -13,6 +13,7 @@ class MyWalletViewController: UIViewController {
     @IBOutlet weak var lblTotalAmount: UILabel!
     @IBOutlet weak var lblWalletAmount: UILabel!
     @IBOutlet weak var tblVw: UITableView!
+    @IBOutlet weak var btnOnWithdrawl: UIButton!
     
     var arrTransactionList:[MyWalletModel] = []
     private let refreshControl = UIRefreshControl()
@@ -21,6 +22,10 @@ class MyWalletViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.lblHeading.text = L10n.myWallet
+        self.lblTotalAmount.text = L10n.totalAmount
+        self.btnOnWithdrawl.setLocalizedTitle(L10n.withdrawl)
+        
         self.tblVw.delegate = self
         self.tblVw.dataSource = self
        
@@ -29,7 +34,6 @@ class MyWalletViewController: UIViewController {
     }
     
     private func setupPullToRefresh() {
-        // ✅ Step 3: Configure refresh control
         refreshControl.tintColor = .systemBlue
         refreshControl.attributedTitle = NSAttributedString(string: "Refreshing Transactions...", attributes: [.foregroundColor: UIColor.gray])
         refreshControl.addTarget(self, action: #selector(handleRefresh(_:)), for: .valueChanged)
@@ -37,7 +41,6 @@ class MyWalletViewController: UIViewController {
     }
     
     @objc private func handleRefresh(_ sender: UIRefreshControl) {
-        // ✅ Step 4: Reload data from server
         self.call_WebService_GetWallet()
     }
 

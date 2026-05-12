@@ -8,7 +8,7 @@
 import UIKit
 import SDWebImage
 
-class JobDetailsViewController: UIViewController {
+class JobDetailsViewController: UIViewController, MakePaymentDelegate {
     
     @IBOutlet weak var subVw: UIView!
     @IBOutlet weak var lblHeadertitle: UILabel!
@@ -34,7 +34,15 @@ class JobDetailsViewController: UIViewController {
     @IBOutlet weak var vwCreateMilestone: UIView!
     @IBOutlet weak var tfEnterAmount: UITextField!
     @IBOutlet weak var btnContinueMileStone: UIButton!
+    @IBOutlet weak var btnCreateMilestone: UIButton!
+    @IBOutlet weak var btnMarkAsComplete: UIButton!
+    @IBOutlet weak var lblYourProjectCompleted: UILabel!
+    @IBOutlet weak var lblYouProvidedRating: UILabel!
+    @IBOutlet weak var lblYourComntsToEmply: UILabel!
+    @IBOutlet weak var lblWhatIsMiles: UILabel!
     
+    @IBOutlet weak var vwMarkAsCompleted: UIView!
+    @IBOutlet weak var vwWhatIsMilestone: UIView!
     @IBOutlet weak var vwCompleted: UIView!
     @IBOutlet weak var lblEmployeeNameCompleted: UILabel!
     @IBOutlet weak var imgVwEmployeeCompleted: UIImageView!
@@ -44,10 +52,25 @@ class JobDetailsViewController: UIViewController {
     var isComingFrom = ""
     var objJobDetails: JobsModel?
     var arrServices = [String]()
+    // MARK: - Properties
+    private var dimView: UIView?
+    private var popupView: UIView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
+        setLocalization()
+    }
+    
+    func setLocalization(){
+        self.lblServicetypetitle.text = L10n.serviceType
+        self.lblDescriptionServiceTitle.text = L10n.descriptionServices
+        self.lblDescriptionServiceHeading.text = L10n.descriptionServices
+        self.lblHeadertitle.text = L10n.jobDetails
+        
+        self.lblWhatIsMiles.text = L10n.whta_is_milestone
+        self.btnCreateMilestone.setLocalizedTitle(L10n.create_milestone)
+        self.btnMarkAsComplete.setLocalizedTitle(L10n.mark_as_complete)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -74,8 +97,9 @@ class JobDetailsViewController: UIViewController {
         
         if self.isComingFrom == "Employee"{
             
-            self.lblApplyNow.text = "Apply now if you have\nthe requier skill"
-            self.btnOnApplyNow.setTitle("Apply Now", for: .normal)
+            self.lblApplyNow.text = L10n.applyNow//"Apply now if you have\nthe requier skill"
+            self.btnOnApplyNow.setLocalizedTitle(L10n.applyNow)
+            // self.btnOnApplyNow.setTitle("Apply Now", for: .normal)
             
             self.lblServiceType.text = "\(self.objJobDetails?.type ?? "")"
             self.lblDescriptionService.text = "\(self.objJobDetails?.details ?? "")"
@@ -163,6 +187,21 @@ class JobDetailsViewController: UIViewController {
                 self.lblCommentEmployeeCompleted.text = objJobDetails?.strReview
             }
         }
+        
+        if objJobDetails?.isShowPayment == true{
+            self.vwCreateMilestone.isHidden = false
+            self.vwWhatIsMilestone.isHidden = false
+            
+            if objJobDetails?.paymentID != "" && objJobDetails?.isBided != 0{
+                self.vwMarkAsCompleted.isHidden = false
+            }else{
+                self.vwMarkAsCompleted.isHidden = true
+            }
+            
+        }else{
+            self.vwCreateMilestone.isHidden = true
+            self.vwWhatIsMilestone.isHidden = true
+        }
     }
     
     private func setupTableView() {
@@ -190,14 +229,15 @@ class JobDetailsViewController: UIViewController {
             vc.objJobDetails = self.objJobDetails
             self.navigationController?.pushViewController(vc, animated: true)
         }
-       
-    }
-    
-    @IBAction func btnOnWhatIsMilestone(_ sender: Any) {
         
     }
     
+    @IBAction func btnOnWhatIsMilestone(_ sender: Any) {
+        showMilestonePopup()
+    }
+    
     @IBAction func btnOnCreateMilestone(_ sender: Any) {
+        self.tfEnterAmount.text = ""
         self.subVw.isHidden = false
     }
     
@@ -213,7 +253,25 @@ class JobDetailsViewController: UIViewController {
     
     @IBAction func btnOnCreateMileStone(_ sender: Any) {
         if ((self.tfEnterAmount.text?.isEmpty) != nil){
+            
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "MakePaymentViewController") as! MakePaymentViewController
+            vc.delegate = self
+            vc.strTotalPayment = self.tfEnterAmount.text ?? ""
+            vc.strJobId = self.objJobDetails?.id ?? ""
+            vc.curreny = self.objJobDetails?.currency ?? ""
+            self.navigationController?.pushViewController(vc, animated: true)
+            
+            //self.call_WebService_CreateMileStone()
+        }
+    }
+    
+    // Delegate Method to Handle Payment Completion
+    func paymentDidComplete(success: Bool) {
+        if success {
             self.call_WebService_CreateMileStone()
+           // self.onBackPressed()
+        }else{
+            
         }
     }
 }
@@ -364,19 +422,19 @@ extension JobDetailsViewController {
                     print(responseDict)
                     
                     if let resultArray = responseDict["result"] as? [[String: Any]] {
-//                        for dataDict in resultArray {
-//                            let review = MyReviewModel(from: dataDict)
-//                            self.arrReviews.append(review)
-//                        }
+                        //                        for dataDict in resultArray {
+                        //                            let review = MyReviewModel(from: dataDict)
+                        //                            self.arrReviews.append(review)
+                        //                        }
                     }
                     
-//                    if self.arrReviews.isEmpty {
-//                        self.tblvw.displayBackgroundText(text: "No Reviews Available", fontStyle: "ABeeZee-Regular", fontSize: 22)
-//                    } else {
-//                        self.tblvw.displayBackgroundText(text: "")
-//                    }
+                    //                    if self.arrReviews.isEmpty {
+                    //                        self.tblvw.displayBackgroundText(text: "No Reviews Available", fontStyle: "ABeeZee-Regular", fontSize: 22)
+                    //                    } else {
+                    //                        self.tblvw.displayBackgroundText(text: "")
+                    //                    }
                     
-                   // self.tblvw.reloadData()
+                    // self.tblvw.reloadData()
                     
                 } else {
                     objAlert.showAlert(message: message ?? "", title: "Alert", controller: self)
@@ -391,4 +449,113 @@ extension JobDetailsViewController {
             print("Error: \(error)")
         }
     }
+}
+
+
+extension JobDetailsViewController{
+    // MARK: - Popup
+    private func showMilestonePopup() {
+        
+        // Background Dim View
+        let dim = UIView(frame: self.view.bounds)
+        dim.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        dim.alpha = 0
+        
+        // Close popup on background tap
+        let tap = UITapGestureRecognizer(target: self, action: #selector(hideMilestonePopup))
+        dim.addGestureRecognizer(tap)
+        
+        self.view.addSubview(dim)
+        self.dimView = dim
+        
+        // Main Popup View
+        let popupWidth: CGFloat = self.view.frame.width - 40
+        
+        let popup = UIView()
+        popup.backgroundColor = .white
+        popup.layer.cornerRadius = 18
+        popup.translatesAutoresizingMaskIntoConstraints = false
+        
+        self.view.addSubview(popup)
+        self.popupView = popup
+        
+        // Title Label
+        let titleLabel = UILabel()
+        titleLabel.text = "Milestone Payments"
+        titleLabel.font = UIFont.boldSystemFont(ofSize: 22)
+        titleLabel.textAlignment = .center
+        titleLabel.numberOfLines = 0
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Description Label
+        let descriptionLabel = UILabel()
+        descriptionLabel.text = L10n.pay_linkskill_securely
+        
+        descriptionLabel.font = UIFont.systemFont(ofSize: 16)
+        descriptionLabel.textColor = .darkGray
+        descriptionLabel.numberOfLines = 0
+        descriptionLabel.textAlignment = .left
+        descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        // OK Button
+        let okButton = UIButton(type: .system)
+        okButton.setTitle(L10n.ok, for: .normal)
+        okButton.backgroundColor = .systemYellow
+        okButton.setTitleColor(.white, for: .normal)
+        okButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+        okButton.layer.cornerRadius = 12
+        okButton.translatesAutoresizingMaskIntoConstraints = false
+        okButton.addTarget(self, action: #selector(hideMilestonePopup), for: .touchUpInside)
+        
+        // Add Subviews
+        popup.addSubview(titleLabel)
+        popup.addSubview(descriptionLabel)
+        popup.addSubview(okButton)
+        
+        // Constraints
+        NSLayoutConstraint.activate([
+            
+            popup.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
+            popup.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            popup.widthAnchor.constraint(equalToConstant: popupWidth),
+            
+            titleLabel.topAnchor.constraint(equalTo: popup.topAnchor, constant: 24),
+            titleLabel.leadingAnchor.constraint(equalTo: popup.leadingAnchor, constant: 20),
+            titleLabel.trailingAnchor.constraint(equalTo: popup.trailingAnchor, constant: -20),
+            
+            descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20),
+            descriptionLabel.leadingAnchor.constraint(equalTo: popup.leadingAnchor, constant: 20),
+            descriptionLabel.trailingAnchor.constraint(equalTo: popup.trailingAnchor, constant: -20),
+            
+            okButton.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 24),
+            okButton.leadingAnchor.constraint(equalTo: popup.leadingAnchor, constant: 20),
+            okButton.trailingAnchor.constraint(equalTo: popup.trailingAnchor, constant: -20),
+            okButton.heightAnchor.constraint(equalToConstant: 50),
+            okButton.bottomAnchor.constraint(equalTo: popup.bottomAnchor, constant: -20)
+        ])
+        
+        // Animation
+        popup.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+        popup.alpha = 0
+        
+        UIView.animate(withDuration: 0.25) {
+            dim.alpha = 1
+            popup.alpha = 1
+            popup.transform = .identity
+        }
+    }
+    
+    // MARK: - Hide Popup
+    @objc private func hideMilestonePopup() {
+        
+        UIView.animate(withDuration: 0.25, animations: {
+            self.dimView?.alpha = 0
+            self.popupView?.alpha = 0
+            self.popupView?.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+        }) { _ in
+            self.dimView?.removeFromSuperview()
+            self.popupView?.removeFromSuperview()
+        }
+    }
+    
 }

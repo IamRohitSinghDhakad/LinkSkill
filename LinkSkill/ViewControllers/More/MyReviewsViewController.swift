@@ -25,6 +25,8 @@ class MyReviewsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.lblMyreiews.text = L10n.myReviews
+        
         self.lblUserName.applyStyle(AppFonts.price18)
 //        self.lblUserName.text = objAppShareData.UserDetail.name
 //        self.imgVwUser.sd_setImage(with: URL(string: objAppShareData.UserDetail.userImage ?? ""), placeholderImage: UIImage(named: "ic_profile_placeholder"))

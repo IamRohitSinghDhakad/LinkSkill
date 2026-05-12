@@ -29,6 +29,10 @@ class HomeEmployerViewController: UIViewController {
         setupTableView()
         setupPullToRefresh()
         
+        self.btnOpen.setLocalizedTitle(L10n.open)
+        self.btnActive.setLocalizedTitle(L10n.active)
+        self.btnComplete.setLocalizedTitle(L10n.complete)
+        
         self.vwOpen.backgroundColor = UIColor(named: "AppColor")?.withAlphaComponent(1.0)   // Full color
         self.vwActive.backgroundColor = UIColor(named: "AppColor")?.withAlphaComponent(0.5)  // 50% opacity
         self.vwComplete.backgroundColor = UIColor(named: "AppColor")?.withAlphaComponent(0.5)   // Full color
@@ -61,7 +65,6 @@ class HomeEmployerViewController: UIViewController {
     }
     
     @objc private func handleRefresh(_ sender: UIRefreshControl) {
-        // ✅ Step 4: Reload data from server
         self.call_WebService_GetJobs(strStatus: self.strStatus)
     }
 
@@ -107,7 +110,7 @@ extension HomeEmployerViewController: UITableViewDelegate, UITableViewDataSource
         let symbol = (obj.currency?.uppercased() == "USD") ? "$" : "€"
         cell.lblEuros.text = "\(symbol)\(obj.price?.formattedPrice ?? "") \(obj.currency ?? "")"
         cell.lblServicetype.text = "\(obj.type ?? "")"
-        cell.lblDescription.text = "Description Services: \(obj.details ?? "")"
+        cell.lblDescription.text = L10n.descriptionServices + " \(obj.details ?? "")"
         cell.imgVw.sd_setImage(with: URL(string: obj.employeeImage ?? ""), placeholderImage: UIImage(named: "logo"))
 
         if self.strStatus == "Awarded,Accepted" || self.strStatus == "Completed"{

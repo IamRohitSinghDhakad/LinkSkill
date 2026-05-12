@@ -13,11 +13,22 @@ enum UserInfoType: String {
 import UIKit
 
 class LoginViewController: UIViewController {
-
+    @IBOutlet weak var lblWelcome: UILabel!
+    @IBOutlet weak var lblDesc: UILabel!
+    @IBOutlet weak var btnEmployee: UIButton!
+    @IBOutlet weak var btnEmployeer: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        setLocalization()
+    }
+    
+    func setLocalization(){
+        self.lblWelcome.text = L10n.welcomeToLinkskill + L10n.appName
+        self.lblDesc.text = L10n.welcomeText
+        self.btnEmployee.setLocalizedTitle(L10n.employee)
+        self.btnEmployeer.setLocalizedTitle(L10n.employer)
     }
     
     @IBAction func btnOnEmployee(_ sender: Any) {

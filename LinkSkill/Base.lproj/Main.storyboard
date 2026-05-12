@@ -192,6 +192,12 @@ Lorem Ipsum has been the industry's standard dummy</string>
                             <constraint firstItem="kLy-MS-gki" firstAttribute="top" secondItem="Z1g-AW-Eid" secondAttribute="bottom" constant="8" symbolic="YES" id="y0d-uk-NGy"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="btnEmployee" destination="rMY-NR-ufR" id="Nf6-n9-vAA"/>
+                        <outlet property="btnEmployeer" destination="mpq-hF-rFV" id="Ads-My-9nH"/>
+                        <outlet property="lblDesc" destination="kLy-MS-gki" id="ehg-Yz-aJq"/>
+                        <outlet property="lblWelcome" destination="etn-ZV-dMP" id="rh6-S7-DCl"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1fg-zq-Kjg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -297,10 +303,10 @@ Lorem Ipsum has been the industry's standard dummy</string>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="frY-jg-ZzQ">
-                                        <rect key="frame" x="227.66666666666669" y="195" width="117" height="30"/>
+                                        <rect key="frame" x="249.66666666666663" y="195" width="95" height="30"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JW8-qM-R5d">
-                                                <rect key="frame" x="0.0" y="0.0" width="117" height="30"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="95" height="30"/>
                                                 <fontDescription key="fontDescription" name="ABeeZee-Regular" family="ABeeZee" pointSize="11"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                 <state key="normal" title="Forget Password ?">
@@ -320,6 +326,11 @@ Lorem Ipsum has been the industry's standard dummy</string>
                                             <constraint firstItem="JW8-qM-R5d" firstAttribute="leading" secondItem="frY-jg-ZzQ" secondAttribute="leading" id="fXi-3a-9Ux"/>
                                             <constraint firstAttribute="bottom" secondItem="JW8-qM-R5d" secondAttribute="bottom" id="scv-Dd-g0d"/>
                                         </constraints>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="15G-LL-i2p"/>
+                                            </mask>
+                                        </variation>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qny-8k-abM">
                                         <rect key="frame" x="20" y="265" width="313.66666666666669" height="45"/>
@@ -435,6 +446,11 @@ Lorem Ipsum has been the industry's standard dummy</string>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="btnForgetPassword" destination="JW8-qM-R5d" id="yAc-vN-q15"/>
+                        <outlet property="btnLogin" destination="xWo-64-cOl" id="j7l-gZ-Lkg"/>
+                        <outlet property="lblDontHave" destination="78q-W3-FMJ" id="7HW-WH-ZuW"/>
+                        <outlet property="lblRegisterHere" destination="IIQ-AL-cbY" id="MdM-Vp-VBv"/>
+                        <outlet property="lblSignIn" destination="ajf-YH-Aci" id="FHn-Tc-xlO"/>
                         <outlet property="tfEmail" destination="bmH-5v-spy" id="ecm-yZ-CxQ"/>
                         <outlet property="tfPassword" destination="Sqg-hz-FAG" id="XxB-0j-3DY"/>
                     </connections>
@@ -873,6 +889,7 @@ Lorem Ipsum has been the industry's standard dummy</string>
                     <tabBarItem key="tabBarItem" title="Profile" image="profile_tab" id="jo7-pf-4De"/>
                     <size key="freeformSize" width="393" height="1000"/>
                     <connections>
+                        <outlet property="btnOnSave" destination="Bl2-b8-W41" id="9A6-1O-7fu"/>
                         <outlet property="imgVwUser" destination="FVS-cL-SeW" id="ohL-rk-Zag"/>
                         <outlet property="tfAddress" destination="2rU-6M-nmm" id="aRt-Bf-5ES"/>
                         <outlet property="tfCity" destination="iaV-EC-eqg" id="xhA-de-51C"/>
@@ -1285,6 +1302,8 @@ Lorem Ipsum has been the industry's standard dummy</string>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="btnRegister" destination="s1N-Sc-gqb" id="QWC-nE-1IL"/>
+                        <outlet property="lblSignUp" destination="G1C-1y-Lz5" id="0yi-hP-91h"/>
                         <outlet property="tfAddress" destination="igz-hw-d8P" id="mBE-Qu-2h6"/>
                         <outlet property="tfEmail" destination="U3c-Hu-gsb" id="Ytc-5T-oSR"/>
                         <outlet property="tfMobile" destination="Aaf-NK-k4n" id="hX8-Rn-xNi"/>
@@ -1426,6 +1445,9 @@ associated with your account.</string>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="btnSubmit" destination="Ikd-Ot-kTC" id="1UA-rX-kMM"/>
+                        <outlet property="lblDesc" destination="ejS-Qq-4Ae" id="3MZ-F8-YNg"/>
+                        <outlet property="lblForgetPassword" destination="hK7-6x-ERi" id="3Ea-XW-ZWp"/>
                         <outlet property="tfEmail" destination="mDl-Pj-xuw" id="ful-wC-cKg"/>
                     </connections>
                 </viewController>
@@ -1701,6 +1723,7 @@ associated with your account.</string>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="btnApplyForJob" destination="VMf-59-hKb" id="xyi-sl-xnb"/>
                         <outlet property="lblBidAmount" destination="Z8S-SD-cC2" id="hV5-vr-kA1"/>
                         <outlet property="lblCurrency" destination="WYQ-Rm-7Gc" id="h5a-5H-wEP"/>
                         <outlet property="lblCurrencySymbol" destination="zRt-97-AC9" id="FfW-LR-H2R"/>
@@ -1942,7 +1965,7 @@ associated with your account.</string>
                                                                                                             <constraint firstAttribute="width" secondItem="seQ-KF-EGc" secondAttribute="height" id="okg-1u-FAb"/>
                                                                                                         </constraints>
                                                                                                     </imageView>
-                                                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="what is milestone?" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vdX-qL-JOe">
+                                                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="what is milestone?" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="5" translatesAutoresizingMaskIntoConstraints="NO" id="vdX-qL-JOe">
                                                                                                         <rect key="frame" x="17" y="0.0" width="91" height="21"/>
                                                                                                         <fontDescription key="fontDescription" name="ABeeZee-Regular" family="ABeeZee" pointSize="10"/>
                                                                                                         <nil key="textColor"/>
@@ -2280,7 +2303,7 @@ associated with your account.</string>
                                                 <rect key="frame" x="0.0" y="0.0" width="393" height="128"/>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="On3-Tq-Qyt">
-                                                <rect key="frame" x="12" y="44.333333333333258" width="167.33333333333334" height="39.666666666666657"/>
+                                                <rect key="frame" x="12" y="44.333333333333258" width="189" height="39.666666666666657"/>
                                                 <string key="text">Apply now if you have
 the requier skill</string>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
@@ -2288,11 +2311,11 @@ the requier skill</string>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MJC-W7-AXz">
-                                                <rect key="frame" x="281" y="46.666666666666742" width="100" height="35"/>
+                                                <rect key="frame" x="231" y="46.666666666666742" width="150" height="35"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.2412574405" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="35" id="blZ-7P-xIs"/>
-                                                    <constraint firstAttribute="width" constant="100" id="jaT-j2-MVw"/>
+                                                    <constraint firstAttribute="width" constant="150" id="jaT-j2-MVw"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -2316,6 +2339,7 @@ the requier skill</string>
                                             <constraint firstAttribute="trailing" secondItem="Wi2-H8-TtI" secondAttribute="trailing" id="BHm-gi-6RV"/>
                                             <constraint firstItem="MJC-W7-AXz" firstAttribute="centerY" secondItem="On3-Tq-Qyt" secondAttribute="centerY" id="CCh-yV-GX8"/>
                                             <constraint firstAttribute="height" constant="128" id="HmJ-r5-unn"/>
+                                            <constraint firstItem="MJC-W7-AXz" firstAttribute="leading" secondItem="On3-Tq-Qyt" secondAttribute="trailing" constant="30" id="LcV-Sm-u84"/>
                                             <constraint firstAttribute="bottom" secondItem="Wi2-H8-TtI" secondAttribute="bottom" id="Mv7-zt-b5P"/>
                                             <constraint firstItem="On3-Tq-Qyt" firstAttribute="leading" secondItem="PuP-c8-KqJ" secondAttribute="leading" constant="12" id="WlF-MU-ebK"/>
                                             <constraint firstAttribute="trailing" secondItem="MJC-W7-AXz" secondAttribute="trailing" constant="12" id="aTk-Nx-uIp"/>
@@ -2463,6 +2487,8 @@ want to create miulestone</string>
                     <size key="freeformSize" width="393" height="1200"/>
                     <connections>
                         <outlet property="btnContinueMileStone" destination="Ga3-vC-cjc" id="ZD3-jh-b4Q"/>
+                        <outlet property="btnCreateMilestone" destination="Eun-pD-dSE" id="HND-kF-2R4"/>
+                        <outlet property="btnMarkAsComplete" destination="4gK-M5-xwr" id="t5Y-pP-hEF"/>
                         <outlet property="btnOnApplyNow" destination="MJC-W7-AXz" id="bGL-KX-BDD"/>
                         <outlet property="imgVwAwardedEmployee" destination="LkI-YO-cjH" id="uje-FL-L2O"/>
                         <outlet property="imgVwAwardedEmployer" destination="oWn-WZ-VfP" id="eXu-a5-lus"/>
@@ -2481,6 +2507,10 @@ want to create miulestone</string>
                         <outlet property="lblNameEmployerAwardedName" destination="MLK-aP-qgn" id="NrI-Ze-ZJK"/>
                         <outlet property="lblServiceType" destination="ppd-l5-VMR" id="xJb-gf-mp5"/>
                         <outlet property="lblServicetypetitle" destination="na8-ep-RTJ" id="RZZ-J7-9zd"/>
+                        <outlet property="lblWhatIsMiles" destination="vdX-qL-JOe" id="yQ1-Dz-TUb"/>
+                        <outlet property="lblYouProvidedRating" destination="KKp-yP-4Yo" id="Ct4-Th-iQ5"/>
+                        <outlet property="lblYourComntsToEmply" destination="sMg-jz-AWO" id="6XY-5l-SIv"/>
+                        <outlet property="lblYourProjectCompleted" destination="O30-0e-M5y" id="EE5-nW-c9K"/>
                         <outlet property="ratingVwCompletedEmployee" destination="den-hJ-s1h" id="ItU-dr-hOa"/>
                         <outlet property="subVw" destination="jT7-6Y-fyy" id="dnP-ce-2Pg"/>
                         <outlet property="tblVwDescreiptionServices" destination="LrB-U7-c3r" id="m7d-g6-wZ2"/>
@@ -2490,7 +2520,9 @@ want to create miulestone</string>
                         <outlet property="vwAwardedEmployee" destination="Sbr-fn-ed2" id="8rc-xd-Ma3"/>
                         <outlet property="vwAwardedEmployeer" destination="alW-OR-EQz" id="RBd-9d-MYl"/>
                         <outlet property="vwCompleted" destination="oLQ-TI-KVK" id="VLO-ID-RIq"/>
-                        <outlet property="vwCreateMilestone" destination="lz3-ct-QuL" id="OCh-YA-CIc"/>
+                        <outlet property="vwCreateMilestone" destination="0tz-Zy-5fd" id="dz1-GT-Lnw"/>
+                        <outlet property="vwMarkAsCompleted" destination="AEE-K4-QYa" id="fC0-hJ-YOU"/>
+                        <outlet property="vwWhatIsMilestone" destination="LAA-l3-oBm" id="Ovh-h5-vBR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BBe-yC-NzW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -2762,6 +2794,7 @@ want to create miulestone</string>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="btnOnWithdrawl" destination="fEZ-Hq-OkQ" id="ArE-p8-z3K"/>
                         <outlet property="lblHeading" destination="Hwf-vC-GVi" id="MXG-Wn-cfy"/>
                         <outlet property="lblTotalAmount" destination="q3z-qm-MQv" id="Qok-H4-nYr"/>
                         <outlet property="lblWalletAmount" destination="6PF-Sh-NKO" id="x1L-5K-gBY"/>
@@ -3196,6 +3229,8 @@ want to create miulestone</string>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="btnAccepted" destination="cSh-bp-697" id="7hN-a9-XMQ"/>
+                        <outlet property="btnCompleted" destination="dfm-Fg-HAf" id="SSJ-jT-rmX"/>
                         <outlet property="lblHeader" destination="JTz-IU-qrk" id="ITa-tF-1yl"/>
                         <outlet property="tblVw" destination="kzy-YN-PTS" id="eWu-jg-tzr"/>
                         <outlet property="vwAccepted" destination="DTO-De-8AD" id="EzA-JA-wSI"/>
@@ -3701,7 +3736,9 @@ you provide</string>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="btnComplete" destination="UVO-Zj-G1J" id="7xo-Gs-qYR"/>
                         <outlet property="cvCategory" destination="fiI-AV-Vu3" id="QCE-xa-hJm"/>
+                        <outlet property="lblSelectService" destination="bjU-SU-jIQ" id="OuQ-09-D8q"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ijb-Ml-cCg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -3796,6 +3833,7 @@ you provide</string>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="lblHeading" destination="ljF-9t-HdD" id="tfh-T6-jWY"/>
                         <outlet property="webVw" destination="hQL-LN-F7S" id="W7x-ou-P0n"/>
                     </connections>
                 </viewController>
@@ -4040,6 +4078,7 @@ you provide</string>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="lblHeading" destination="kyW-fO-eeQ" id="KHl-5g-cHf"/>
                         <outlet property="tblvw" destination="4wb-SQ-qUO" id="4KT-MM-4b4"/>
                     </connections>
                 </viewController>
@@ -4310,6 +4349,7 @@ you provide</string>
                         <outlet property="imgVwSpanishSelect" destination="ZmC-qp-Js1" id="aPH-RH-Z0Y"/>
                         <outlet property="imgvwPortueseSelect" destination="TG5-87-3Q6" id="nYa-Ha-B8s"/>
                         <outlet property="lblEnglish" destination="HzV-3H-ljG" id="l0o-4M-dJP"/>
+                        <outlet property="lblHeader" destination="YYg-uG-DM8" id="HXN-4o-Ddd"/>
                         <outlet property="lblPortuese" destination="7Sv-xC-TX9" id="Xmo-GD-4U2"/>
                         <outlet property="lblSpanish" destination="x8U-bT-8Yp" id="1GJ-3b-N4m"/>
                     </connections>
@@ -4542,7 +4582,10 @@ you provide</string>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="btnSubmit" destination="XF7-JP-uxi" id="dss-k3-hrk"/>
                         <outlet property="lblHeading" destination="w1t-NO-xGW" id="bxg-rd-9Mj"/>
+                        <outlet property="lblMsg" destination="c8s-g0-cEO" id="HHK-mT-crR"/>
+                        <outlet property="lblSubject" destination="RR8-3U-Qvv" id="FjH-Id-5cc"/>
                         <outlet property="tfEmail" destination="1ra-IB-j7k" id="Nsa-ma-Q2h"/>
                         <outlet property="txtVwMsg" destination="A52-Vp-pEf" id="A1v-nj-hHh"/>
                     </connections>
@@ -4899,7 +4942,7 @@ you provide</string>
                                 </constraints>
                             </scrollView>
                             <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cTv-Nr-XiT">
-                                <rect key="frame" x="-336" y="0.0" width="393" height="852"/>
+                                <rect key="frame" x="-160" y="0.0" width="393" height="852"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zmc-Hv-F7w">
                                         <rect key="frame" x="19.666666666666657" y="64" width="353.66666666666674" height="724"/>
@@ -5124,6 +5167,14 @@ you provide</string>
                         <inset key="imageInsets" minX="0.0" minY="-40" maxX="0.0" maxY="0.0"/>
                     </tabBarItem>
                     <connections>
+                        <outlet property="btnDone" destination="hH9-wA-ah5" id="EXf-rY-lKF"/>
+                        <outlet property="btnSubmit" destination="x32-Bu-zqT" id="QhP-Py-iNZ"/>
+                        <outlet property="lblCurrency" destination="jm1-bk-oeb" id="DyQ-Te-L1u"/>
+                        <outlet property="lblJobDetails" destination="O6G-tq-D1v" id="NzL-kn-HCB"/>
+                        <outlet property="lblPrice" destination="4u6-XC-26Z" id="Bfe-Yy-8Dp"/>
+                        <outlet property="lblSelectSkill" destination="3xI-UC-5I8" id="egy-V4-WN6"/>
+                        <outlet property="lblServicetype" destination="9E3-MH-ls5" id="8wL-E4-QOb"/>
+                        <outlet property="lblSkillReq" destination="Uqk-Yc-7xf" id="MAf-5m-OcW"/>
                         <outlet property="subVw" destination="cTv-Nr-XiT" id="FQe-ts-QeI"/>
                         <outlet property="tblvw" destination="FnI-d0-77z" id="vpB-SO-Juk"/>
                         <outlet property="tfCurrency" destination="Zk7-In-Pai" id="qiT-a1-U4D"/>
@@ -5786,6 +5837,7 @@ you provide</string>
                     <tabBarItem key="tabBarItem" title="Profile" image="profile_tab" id="3Ww-mh-MqN"/>
                     <size key="freeformSize" width="393" height="1000"/>
                     <connections>
+                        <outlet property="btnSave" destination="ah4-3s-dyA" id="Dat-22-Qfa"/>
                         <outlet property="imgVwUser" destination="Nfj-r7-02X" id="eYp-wf-zT5"/>
                         <outlet property="tfAddress" destination="Dbc-4e-QR1" id="drx-mo-YCr"/>
                         <outlet property="tfCity" destination="goL-x6-Aqz" id="1yM-gB-sRW"/>
@@ -6142,7 +6194,6 @@ you provide</string>
                                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </state>
                                                         <connections>
-                                                            <action selector="btnOnWithdrawl:" destination="oZ8-Fu-fU9" eventType="touchUpInside" id="sRc-FH-MaX"/>
                                                             <action selector="btnWithdrawl:" destination="jtz-pB-dVj" eventType="touchUpInside" id="Jg2-mn-ATl"/>
                                                         </connections>
                                                     </button>
@@ -6211,6 +6262,13 @@ you provide</string>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="btnComplete" destination="qg9-jf-tws" id="gdD-d6-VgA"/>
+                        <outlet property="btnWithdrawl" destination="FgG-WD-edc" id="wkO-Eu-xkw"/>
+                        <outlet property="lblAccHolderName" destination="Te0-1A-bhU" id="Iff-iJ-VVr"/>
+                        <outlet property="lblAccNumber" destination="70x-2w-sbX" id="Nkv-43-Rsp"/>
+                        <outlet property="lblBankName" destination="UFv-qg-NpM" id="k7g-EU-fJd"/>
+                        <outlet property="lblHeading" destination="MUl-eP-m5J" id="aal-eg-lg7"/>
+                        <outlet property="lblIfsc" destination="W0P-h9-BOh" id="xPK-eg-g0C"/>
                         <outlet property="lblText" destination="c4x-68-A0k" id="Iqc-9C-7e6"/>
                         <outlet property="subVw" destination="tYT-sT-9pc" id="vka-sC-kIJ"/>
                         <outlet property="tfAccountHolderName" destination="VWJ-Nl-Ggi" id="IHP-qf-3i6"/>
@@ -6429,13 +6487,13 @@ you provide</string>
                                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xFX-ES-jAS">
                                                                                             <rect key="frame" x="291" y="5" width="87" height="48.333333333333336"/>
                                                                                             <subviews>
-                                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Hiiiii" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hd5-EZ-DT3">
+                                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hiiiii" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hd5-EZ-DT3">
                                                                                                     <rect key="frame" x="15" y="7.9999999999999982" width="57" height="20.333333333333329"/>
                                                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                                                     <nil key="textColor"/>
                                                                                                     <nil key="highlightedColor"/>
                                                                                                 </label>
-                                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="2 week ago" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lhz-4X-gWa">
+                                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2 week ago" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lhz-4X-gWa">
                                                                                                     <rect key="frame" x="10" y="30.333333333333329" width="62" height="14"/>
                                                                                                     <fontDescription key="fontDescription" name="JosefinSans-SemiBold" family="Josefin Sans" pointSize="12"/>
                                                                                                     <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -7293,7 +7351,10 @@ you provide</string>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="btnSubmit" destination="Ruz-EK-WB5" id="bBQ-n5-Ea7"/>
                         <outlet property="imgVwUser" destination="cjD-4J-7tN" id="SNx-X1-URE"/>
+                        <outlet property="lblComments" destination="Mmw-0x-Cza" id="mrm-9U-5rf"/>
+                        <outlet property="lblDesc" destination="PpL-9V-TW1" id="2hB-jm-g0N"/>
                         <outlet property="lblHeading" destination="8kM-c7-MkP" id="BVM-eG-eiB"/>
                         <outlet property="ratingVw" destination="Jf1-tq-24Q" id="BsX-2q-Cin"/>
                         <outlet property="txtVwComments" destination="C2G-Gc-qiO" id="zOj-EV-12D"/>
@@ -7303,18 +7364,127 @@ you provide</string>
             </objects>
             <point key="canvasLocation" x="3047" y="1968"/>
         </scene>
+        <!--Make Payment View Controller-->
+        <scene sceneID="ZCH-gd-GJt">
+            <objects>
+                <viewController storyboardIdentifier="MakePaymentViewController" id="arP-C5-HWa" customClass="MakePaymentViewController" customModule="ParkET" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Wm9-D8-WIO">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VL9-FE-coD">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="94.333333333333329"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="header" translatesAutoresizingMaskIntoConstraints="NO" id="8kN-hl-Yn8">
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="94.333333333333329"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Make Payment" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L8n-RF-pBA">
+                                        <rect key="frame" x="129" y="50" width="135" height="24"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
+                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="back" translatesAutoresizingMaskIntoConstraints="NO" id="tVa-sd-0YX">
+                                        <rect key="frame" x="8" y="52" width="20" height="20"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="tVa-sd-0YX" secondAttribute="height" id="8In-Yd-DCw"/>
+                                            <constraint firstAttribute="width" constant="20" id="ejE-0T-iZa"/>
+                                        </constraints>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jdr-vt-6zO">
+                                        <rect key="frame" x="3" y="47" width="30" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="30" id="2bs-vw-ZZI"/>
+                                            <constraint firstAttribute="width" secondItem="Jdr-vt-6zO" secondAttribute="height" id="c9d-Ap-fgP"/>
+                                        </constraints>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <connections>
+                                            <action selector="btnOnBack:" destination="arP-C5-HWa" eventType="touchUpInside" id="fov-k7-g76"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="8kN-hl-Yn8" secondAttribute="bottom" id="2kZ-cK-QAd"/>
+                                    <constraint firstItem="8kN-hl-Yn8" firstAttribute="leading" secondItem="VL9-FE-coD" secondAttribute="leading" id="EJu-mY-kdY"/>
+                                    <constraint firstItem="Jdr-vt-6zO" firstAttribute="centerX" secondItem="tVa-sd-0YX" secondAttribute="centerX" id="Fcc-ig-52B"/>
+                                    <constraint firstItem="L8n-RF-pBA" firstAttribute="centerY" secondItem="8kN-hl-Yn8" secondAttribute="centerY" constant="15" id="Uf9-cZ-Arw"/>
+                                    <constraint firstItem="tVa-sd-0YX" firstAttribute="centerY" secondItem="L8n-RF-pBA" secondAttribute="centerY" id="Vd8-ws-BHs"/>
+                                    <constraint firstAttribute="trailing" secondItem="8kN-hl-Yn8" secondAttribute="trailing" id="bxI-MU-F4V"/>
+                                    <constraint firstItem="8kN-hl-Yn8" firstAttribute="top" secondItem="VL9-FE-coD" secondAttribute="top" id="g4N-bW-vmB"/>
+                                    <constraint firstAttribute="width" secondItem="VL9-FE-coD" secondAttribute="height" multiplier="5:1.2" id="pPv-C1-pPT"/>
+                                    <constraint firstItem="tVa-sd-0YX" firstAttribute="leading" secondItem="VL9-FE-coD" secondAttribute="leading" constant="8" id="uWO-xo-POr"/>
+                                    <constraint firstItem="Jdr-vt-6zO" firstAttribute="centerY" secondItem="tVa-sd-0YX" secondAttribute="centerY" id="v7U-rJ-lHi"/>
+                                    <constraint firstItem="L8n-RF-pBA" firstAttribute="centerX" secondItem="8kN-hl-Yn8" secondAttribute="centerX" id="ybf-SQ-I8Z"/>
+                                </constraints>
+                            </view>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eUR-BB-Khc">
+                                <rect key="frame" x="0.0" y="94.333333333333314" width="393" height="689.66666666666674"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rac-g8-70U">
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="689.66666666666663"/>
+                                        <subviews>
+                                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0mX-Hp-NdL">
+                                                <rect key="frame" x="0.0" y="0.0" width="393" height="689.66666666666663"/>
+                                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <wkWebViewConfiguration key="configuration">
+                                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                                    <wkPreferences key="preferences"/>
+                                                </wkWebViewConfiguration>
+                                            </wkWebView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="0mX-Hp-NdL" firstAttribute="top" secondItem="Rac-g8-70U" secondAttribute="top" id="IbU-Tg-t6v"/>
+                                            <constraint firstItem="0mX-Hp-NdL" firstAttribute="leading" secondItem="Rac-g8-70U" secondAttribute="leading" id="YqF-ch-WSw"/>
+                                            <constraint firstAttribute="trailing" secondItem="0mX-Hp-NdL" secondAttribute="trailing" id="iup-LA-Pji"/>
+                                            <constraint firstAttribute="bottom" secondItem="0mX-Hp-NdL" secondAttribute="bottom" id="kYi-Xg-Ga1"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="Rac-g8-70U" firstAttribute="centerY" secondItem="eUR-BB-Khc" secondAttribute="centerY" priority="750" id="Exa-gG-RsT"/>
+                                    <constraint firstItem="Rac-g8-70U" firstAttribute="top" secondItem="eUR-BB-Khc" secondAttribute="top" id="J3B-AS-9Tn"/>
+                                    <constraint firstAttribute="trailing" secondItem="Rac-g8-70U" secondAttribute="trailing" id="cCY-ee-qvp"/>
+                                    <constraint firstItem="Rac-g8-70U" firstAttribute="leading" secondItem="eUR-BB-Khc" secondAttribute="leading" id="dlF-EK-Ei8"/>
+                                    <constraint firstAttribute="bottom" secondItem="Rac-g8-70U" secondAttribute="bottom" id="f3B-gV-mQ0"/>
+                                    <constraint firstItem="Rac-g8-70U" firstAttribute="centerX" secondItem="eUR-BB-Khc" secondAttribute="centerX" id="hes-eC-oYE"/>
+                                </constraints>
+                            </scrollView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="kXC-Eo-DVd"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="VL9-FE-coD" firstAttribute="leading" secondItem="Wm9-D8-WIO" secondAttribute="leading" id="6IB-Dx-yca"/>
+                            <constraint firstItem="kXC-Eo-DVd" firstAttribute="trailing" secondItem="VL9-FE-coD" secondAttribute="trailing" id="ACm-bJ-Rcb"/>
+                            <constraint firstItem="kXC-Eo-DVd" firstAttribute="bottom" secondItem="eUR-BB-Khc" secondAttribute="bottom" id="IvS-VS-p6o"/>
+                            <constraint firstItem="eUR-BB-Khc" firstAttribute="top" secondItem="VL9-FE-coD" secondAttribute="bottom" id="OBD-f7-Yie"/>
+                            <constraint firstItem="eUR-BB-Khc" firstAttribute="leading" secondItem="kXC-Eo-DVd" secondAttribute="leading" id="PC0-la-LFO"/>
+                            <constraint firstItem="VL9-FE-coD" firstAttribute="top" secondItem="Wm9-D8-WIO" secondAttribute="top" id="VeC-tr-22s"/>
+                            <constraint firstItem="kXC-Eo-DVd" firstAttribute="trailing" secondItem="eUR-BB-Khc" secondAttribute="trailing" id="XSc-CU-HXC"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="webVw" destination="0mX-Hp-NdL" id="Yks-Bk-m2U"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zrr-Rh-z0G" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="8411" y="-436"/>
+        </scene>
     </scenes>
     <resources>
         <image name="LINKSKILL" width="116" height="17.333333969116211"/>
         <image name="add" width="29.333333969116211" height="29.666666030883789"/>
         <image name="attach" width="15.333333015441895" height="13.666666984558105"/>
-        <image name="back" width="7.3333334922790527" height="12.666666984558105"/>
+        <image name="back" width="8.6666669845581055" height="14.333333015441895"/>
         <image name="background_y" width="240" height="426.66665649414062"/>
         <image name="camera.fill" catalog="system" width="128" height="93"/>
         <image name="chat" width="18" height="18"/>
         <image name="customer" width="50" height="50"/>
         <image name="eye" width="11.333333015441895" height="11"/>
         <image name="eye.slash" catalog="system" width="128" height="97"/>
+        <image name="header" width="240" height="60"/>
         <image name="home (1)" width="18" height="18"/>
         <image name="logo" width="135.66667175292969" height="135.66667175292969"/>
         <image name="logo_text" width="116" height="17.333333969116211"/>
@@ -7323,7 +7493,7 @@ you provide</string>
         <image name="paperplane" catalog="system" width="128" height="119"/>
         <image name="person.slash" catalog="system" width="117" height="128"/>
         <image name="plus" catalog="system" width="128" height="113"/>
-        <image name="profile" width="61.333332061767578" height="61.333332061767578"/>
+        <image name="profile" width="16.666666030883789" height="16.666666030883789"/>
         <image name="profile_tab" width="16.666666030883789" height="16.666666030883789"/>
         <image name="rectangle" width="240" height="290"/>
         <image name="rectangle2" width="240" height="290"/>
@@ -7348,7 +7518,7 @@ you provide</string>
             <color red="0.6705882352941176" green="0.69019607843137254" blue="0.72941176470588232" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="AccentColor">
-            <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.79199999570846558" blue="0.15700000524520874" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="AppColor">
             <color red="0.97600001096725464" green="0.86699998378753662" blue="0.36100000143051147" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>

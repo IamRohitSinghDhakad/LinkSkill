@@ -71,7 +71,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         let symbol = (obj.currency?.uppercased() == "USD") ? "$" : "€"
         cell.lblEuros.text = "\(symbol)\(obj.price?.formattedPrice ?? "") \(obj.currency ?? "")"
         cell.lblServicetype.text = "\(obj.type ?? "")"
-        cell.lblDescription.text = "Description Services: \(obj.details ?? "")"
+        cell.lblDescription.text = L10n.descriptionServices + " \(obj.details ?? "")"
         
         // MARK: - Show/Hide "Already Bid" label
         if obj.isBided == 1 && obj.status?.caseInsensitiveCompare("Pending") == .orderedSame {

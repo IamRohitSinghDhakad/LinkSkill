@@ -61,6 +61,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                self.launchNotificationPayload = remoteNotification
            }
         
+        if let lang = UserDefaults.standard.array(forKey: "AppleLanguages")?.first as? String {
+            objAppShareData.currentLanguage = lang
+        }
+        Bundle.setLanguage(objAppShareData.currentLanguage)
+        
         //   AuthNavigation()
         return true
     }

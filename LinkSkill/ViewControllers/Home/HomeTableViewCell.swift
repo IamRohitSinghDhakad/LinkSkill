@@ -17,8 +17,12 @@ class HomeTableViewCell: UITableViewCell {
     @IBOutlet weak var vwAlreadyBid: UIView!
     @IBOutlet weak var lblAlreadyBid: UILabel!
     
+    @IBOutlet weak var lblServiceTypeHeading: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        self.lblServiceTypeHeading.text = L10n.serviceType
+        self.lblAlreadyBid.text = L10n.alredyHaveBid
         
         lbltitle.applyStyle(AppFonts.title)
         lblServicetype.applyStyle(AppFonts.subtitle)

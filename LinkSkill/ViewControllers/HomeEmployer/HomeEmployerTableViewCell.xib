@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -63,17 +63,17 @@
                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="circle" value="YES"/>
                                                 </userDefinedRuntimeAttributes>
                                             </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Service Type:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1gS-hq-MiG">
-                                                <rect key="frame" x="66" y="23" width="90" height="17"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Service Type:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="1gS-hq-MiG">
+                                                <rect key="frame" x="66" y="23" width="120" height="17"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="90" id="lZM-ZX-0TM"/>
+                                                    <constraint firstAttribute="width" constant="120" id="lZM-ZX-0TM"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Computer techince" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y7s-nw-fhz">
-                                                <rect key="frame" x="158" y="23.666666666666668" width="123.66666666666669" height="16.000000000000004"/>
+                                                <rect key="frame" x="188" y="23.666666666666668" width="123.66666666666669" height="16.000000000000004"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="16" id="ZEM-hp-Jsk"/>
                                                 </constraints>
@@ -211,6 +211,8 @@
                 <outlet property="lblDescription" destination="cRe-gh-Fw0" id="Vhl-ME-dhU"/>
                 <outlet property="lblEmployeeName" destination="VXZ-9A-M6E" id="AAV-V2-bxt"/>
                 <outlet property="lblEuros" destination="4D7-r5-4hK" id="m0R-hp-rfV"/>
+                <outlet property="lblPricehead" destination="zdG-xb-9KI" id="tuu-qR-u4R"/>
+                <outlet property="lblServiceTypHead" destination="1gS-hq-MiG" id="Jc9-yP-zck"/>
                 <outlet property="lblServicetype" destination="Y7s-nw-fhz" id="HRU-ge-Wh9"/>
                 <outlet property="vwAwardedEmploye" destination="7eD-wd-Bo0" id="h6y-DG-ANi"/>
             </connections>
@@ -219,7 +221,7 @@
     </objects>
     <resources>
         <image name="briefcase" width="64" height="64"/>
-        <image name="profile" width="16.666666030883789" height="16.666666030883789"/>
+        <image name="profile" width="61.333332061767578" height="61.333332061767578"/>
         <namedColor name="AppColor">
             <color red="0.97600001096725464" green="0.86699998378753662" blue="0.36100000143051147" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>

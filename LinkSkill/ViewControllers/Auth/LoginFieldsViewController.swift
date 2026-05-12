@@ -10,26 +10,43 @@ import UIKit
 class LoginFieldsViewController: UIViewController {
     
     @IBOutlet weak var tfEmail: UITextField!
+    @IBOutlet weak var lblSignIn: UILabel!
     @IBOutlet weak var tfPassword: UITextField!
+    @IBOutlet weak var lblDontHave: UILabel!
+    @IBOutlet weak var btnForgetPassword: UIButton!
+    @IBOutlet weak var btnLogin: UIButton!
+    @IBOutlet weak var lblRegisterHere: UILabel!
     
     var strType: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        if self.strType == UserInfoType.Employee.rawValue{
-//            self.tfEmail.text = "employee@gmail.com"
-//            self.tfPassword.text = "12345"
-//        }else{
-//            self.tfEmail.text = "employer@gmail.com"
-//            self.tfPassword.text = "12345"
-//        }
+        setLocalization()
+        if self.strType == UserInfoType.Employee.rawValue{
+            self.tfEmail.text = "employee@gmail.com"
+            self.tfPassword.text = "12345"
+        }else{
+            self.tfEmail.text = "employer@gmail.com"
+            self.tfPassword.text = "12345"
+        }
+    }
+    
+    func setLocalization(){
+        self.tfEmail.placeholder = L10n.email
+        self.tfPassword.placeholder = L10n.password
+        self.lblSignIn.text = L10n.signIn
+        self.lblDontHave.text = L10n.dontHaveAccount
+        self.lblRegisterHere.text = L10n.register
+        self.btnLogin.setLocalizedTitle(L10n.login)
+        self.btnForgetPassword.setLocalizedTitle(L10n.forgotPassword)
     }
     
     @IBAction func btnOnBack(_ sender: Any) {
         self.onBackPressed()
     }
     
+    
+
     @IBAction func btnShowhidePassword(_ sender: UIButton) {
         sender.isSelected.toggle() // toggle the button state
         

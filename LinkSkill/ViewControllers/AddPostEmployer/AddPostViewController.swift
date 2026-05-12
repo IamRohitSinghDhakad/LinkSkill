@@ -17,6 +17,14 @@ class AddPostViewController: UIViewController {
     @IBOutlet weak var subVw: UIView!
     @IBOutlet weak var tblvw: UITableView!
     @IBOutlet weak var tfSearch: UITextField!
+    @IBOutlet weak var lblServicetype: UILabel!
+    @IBOutlet weak var lblSkillReq: UILabel!
+    @IBOutlet weak var lblPrice: UILabel!
+    @IBOutlet weak var lblCurrency: UILabel!
+    @IBOutlet weak var lblJobDetails: UILabel!
+    @IBOutlet weak var btnSubmit: UIButton!
+    @IBOutlet weak var btnDone: UIButton!
+    @IBOutlet weak var lblSelectSkill: UILabel!
     
     var arrCategory = [CategoryModel]()
     var filteredCategory = [CategoryModel]()
@@ -26,15 +34,32 @@ class AddPostViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.subVw.isHidden = true
-        
+        setLocalization()
         tfSearch.addTarget(self, action: #selector(searchTextChanged(_:)), for: .editingChanged)
         
-        // Disable direct typing and add tap gesture to open action sheet
         tfCurrency.delegate = self
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(currencyFieldTapped))
         tfCurrency.addGestureRecognizer(tapGesture)
         
         call_WebService_GetCategory()
+    }
+    
+    func setLocalization(){
+        
+        self.lblPrice.text = L10n.price
+        self.lblCurrency.text = L10n.currency
+        self.lblServicetype.text = L10n.serviceType
+        self.lblSkillReq.text = L10n.skillsRequired
+        self.lblJobDetails.text = L10n.jobDetails
+        self.lblSelectSkill.text = L10n.selectSkills
+        
+        self.btnDone.setLocalizedTitle(L10n.done)
+        self.btnSubmit.setLocalizedTitle(L10n.submit)
+        
+        self.tfServiceType.placeholder = L10n.enterServiceType
+        self.tfCurrency.placeholder = L10n.currency
+        self.tfPrice.placeholder = L10n.enterPrice
+        self.tfSkill.placeholder = L10n.selectSkills
     }
 
     

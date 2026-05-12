@@ -11,7 +11,7 @@ class MoreEmployerViewController: UIViewController {
 
     @IBOutlet weak var tblVw: UITableView!
     
-    var arrData: [String] = ["My Wallet","Language", "Contact Us", "Privacy Policy", "Terms & Conditions", "Logout", "Delete Account"]
+    var arrData: [String] = [L10n.myWallet,L10n.language, L10n.contactUs, L10n.privacyPolicy, L10n.termsConditions, L10n.logout, "Delete Account"]
     
     override func viewDidLoad() {
         super.viewDidLoad()

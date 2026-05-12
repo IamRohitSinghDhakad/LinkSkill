@@ -12,7 +12,7 @@ class MoreViewController: UIViewController {
     @IBOutlet weak var tblVw: UITableView!
     
     
-    var arrData: [String] = ["My Wallet","Service History", "My Subscription", "My Reviews", "Edit Skills", "Language", "Contact Us", "Privacy Policy", "Terms & Conditions", "Logout", "Delete Account"]
+    var arrData: [String] = [L10n.myWallet,L10n.service_history, L10n.mySubscription, L10n.myReviews, L10n.editSkills, L10n.language, L10n.contactUs, L10n.privacyPolicy, L10n.termsConditions, L10n.logout, "Delete Account"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,7 +71,7 @@ extension MoreViewController: UITableViewDelegate, UITableViewDataSource {
             
         } else if indexPath.row == 9 {
             // Logout
-            objAlert.showAlertCallBack(alertLeftBtn: "Yes", alertRightBtn: "No", title: "Logout", message: "Are you sure you want to logout?", controller: self) {
+            objAlert.showAlertCallBack(alertLeftBtn: "Yes", alertRightBtn: L10n.service_history, title: L10n.logout, message: "Are you sure you want to logout?", controller: self) {
                 objAppShareData.signOut()
             }
         } else if indexPath.row == 10 {

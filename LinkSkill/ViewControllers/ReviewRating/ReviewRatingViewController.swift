@@ -13,12 +13,20 @@ class ReviewRatingViewController: UIViewController, FloatRatingViewDelegate {
     @IBOutlet weak var imgVwUser: UIImageView!
     @IBOutlet weak var ratingVw: FloatRatingView!
     @IBOutlet weak var txtVwComments: RDTextView!
+    @IBOutlet weak var lblDesc: UILabel!
+    @IBOutlet weak var lblComments: UILabel!
+    @IBOutlet weak var btnSubmit: UIButton!
     
     var objJobDetails: JobsModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.ratingVw.delegate = self
+        
+        self.lblHeading.text = L10n.reviewRating
+        self.lblDesc.text = L10n.please_leave_your_feedback_and_submit_your_rating_for_this_seller
+        self.lblComments.text = L10n.comments
+        self.btnSubmit.setLocalizedTitle(L10n.submit)
     }
     
     
@@ -27,9 +35,9 @@ class ReviewRatingViewController: UIViewController, FloatRatingViewDelegate {
     }
 
     @IBAction func btnOnSubmit(_ sender: Any) {
-        
         print(self.ratingVw.rating)
         
+        call_WebService_UpdaetReview()
     }
     
     
@@ -49,7 +57,7 @@ class ReviewRatingViewController: UIViewController, FloatRatingViewDelegate {
             "user_id": objAppShareData.UserDetail.strUserId ?? "",
             "job_id": self.objJobDetails?.id ?? "",
             "language": objAppShareData.currentLanguage,
-            "rating": "",
+            "rating": "\(ratingVw.rating)",
             "review": self.txtVwComments.text!
         ]as [String:Any]
         

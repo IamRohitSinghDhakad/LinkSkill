@@ -13,6 +13,7 @@ class ProposalViewController: UIViewController {
     @IBOutlet weak var tblvw: UITableView!
     
     var objJobDetails: JobsModel?
+    @IBOutlet weak var lblHeading: UILabel!
     
     var arrBidProposalModel = [BidProposalModel]()
     
@@ -21,6 +22,8 @@ class ProposalViewController: UIViewController {
         
         self.tblvw.delegate = self
         self.tblvw.dataSource = self
+        
+        self.lblHeading.text = L10n.proposals
         
         self.call_WebService_GetJobs(strJobID: objJobDetails?.id ?? "")
         
@@ -46,7 +49,7 @@ extension ProposalViewController: UITableViewDelegate, UITableViewDataSource {
         cell.imgVwUser.sd_setImage(with: URL(string: obj.employeeProfile ?? ""), placeholderImage: UIImage(named: "logo"))
         cell.lblUserName.text = obj.employeeName
         cell.lblDescription.text = obj.proposal
-        cell.lblInDays.text = "In \(obj.deliveryTime ?? "") days"
+        cell.lblInDays.text = L10n.in_ + " \(obj.deliveryTime ?? "") " + L10n.days_s
         let symbol = (obj.currency?.uppercased() == "USD") ? "$" : "€"
         cell.lblPrice.text = "\(symbol)\(obj.price?.formattedPrice ?? "") \(obj.currency ?? "")"
         

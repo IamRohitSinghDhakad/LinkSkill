@@ -10,11 +10,16 @@ import SDWebImage
 
 class EditSkillsViewController: UIViewController {
     
+    @IBOutlet weak var lblSelectService: UILabel!
     var arrCategory = [CategoryModel]()
     @IBOutlet weak var cvCategory: UICollectionView!
+    @IBOutlet weak var btnComplete: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.lblSelectService.text = L10n.select_service_nyou_provide
+        self.btnComplete.setLocalizedTitle(L10n.complete)
         
         self.cvCategory.delegate = self
         self.cvCategory.dataSource = self

@@ -12,11 +12,20 @@ class ContactUsViewController: UIViewController {
     @IBOutlet weak var lblHeading: UILabel!
     @IBOutlet weak var tfEmail: UITextField!
     @IBOutlet weak var txtVwMsg: UITextView!
+    @IBOutlet weak var lblSubject: UILabel!
+    @IBOutlet weak var lblMsg: UILabel!
+    @IBOutlet weak var btnSubmit: UIButton!
     
     var isComingFrom : String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.lblHeading.text = L10n.contactUs
+        self.lblSubject.text = L10n.subject
+        self.lblMsg.text = L10n.message
+        
+        self.btnSubmit.setLocalizedTitle(L10n.submit)
 
         self.lblHeading.applyStyle(AppFonts.title)
     }

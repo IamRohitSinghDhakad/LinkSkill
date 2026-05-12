@@ -20,20 +20,33 @@ class ApplyForJobViewController: UIViewController {
     @IBOutlet weak var lblDays: UILabel!
     @IBOutlet weak var lblDescribeYourProposal: UILabel!
     @IBOutlet weak var txtVeProposal: RDTextView!
+    @IBOutlet weak var btnApplyForJob: UIButton!
     
     var objJobDetails: JobsModel?
     var onJobApplied: ((_ updatedJob: JobsModel) -> Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        setLocalization()
         self.setUpUI()
     }
     
+    func setLocalization(){
+        self.lblHeadertitle.text = L10n.applyForJob
+        self.lblPlaceBidOnTheService.text = L10n.place_a_bid_on_this_service
+        self.lblBidAmount.text = L10n.bidAmount
+        self.lblTheServiceWillbe.text = L10n.this_service_will_be_delivered_in
+        self.lblDescribeYourProposal.text = L10n.describeYourProposal
+        self.lblDays.text = L10n.days_s
+        
+        self.btnApplyForJob.setLocalizedTitle(L10n.applyForJob)
+        
+    }
+    
     func setUpUI() {
-        self.lblHeadertitle.text = "Apply for Job"
-        self.lblPlaceBidOnTheService.text = "Place a bid on the service"
-        self.lblBidAmount.text = "Bid amount"
+//        self.lblHeadertitle.text = "Apply for Job"
+//        self.lblPlaceBidOnTheService.text = "Place a bid on the service"
+//        self.lblBidAmount.text = "Bid amount"
         let symbol = (objJobDetails!.currency?.uppercased() == "USD") ? "$" : "€"
         self.lblCurrencySymbol.text = symbol
         if symbol == "$"{
@@ -77,17 +90,17 @@ extension ApplyForJobViewController {
         }
         
         if bidAmount.isEmpty {
-            showAlert(message: "Please enter your bid amount.")
+            showAlert(message: L10n.enterBidAmount)
             return false
         }
         
         if days.isEmpty {
-            showAlert(message: "Please enter the number of days required.")
+            showAlert(message: L10n.enterDeliveryDays)
             return false
         }
         
         if proposal.isEmpty {
-            showAlert(message: "Please describe your proposal.")
+            showAlert(message: L10n.enterProposal)
             return false
         }
         
@@ -95,10 +108,10 @@ extension ApplyForJobViewController {
     }
     
     private func showAlert(message: String) {
-        let alert = UIAlertController(title: "Missing Information",
+        let alert = UIAlertController(title: "Alert",
                                       message: message,
                                       preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        alert.addAction(UIAlertAction(title: L10n.ok, style: .default))
         present(alert, animated: true)
     }
 }
@@ -131,11 +144,11 @@ extension ApplyForJobViewController {
             let message = (response["message"] as? String)
             if status == MessageConstant.k_StatusCode{
                 if response["result"] is [String: Any] {
-                    // ✅ Type confirmed — now safely unwrap
+                   
                     let resultDict = response["result"] as! [String: Any]
                     
                     self.objJobDetails?.isBided = 1
-                    objAlert.showAlertSingleButtonCallBack(alertBtn: "OK", title: "Success", message: message ?? "", controller: self) {
+                    objAlert.showAlertSingleButtonCallBack(alertBtn: L10n.ok, title: L10n.success, message: message ?? "", controller: self) {
                         if let updatedJob = self.objJobDetails {
                             self.onJobApplied?(updatedJob)
                         }

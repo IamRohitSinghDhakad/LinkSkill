@@ -13,16 +13,28 @@ class SignUpViewController: UIViewController {
     @IBOutlet weak var tfEmail: UITextField!
     @IBOutlet weak var tfMobile: UITextField!
     @IBOutlet weak var tfPassword: UITextField!
+    @IBOutlet weak var lblSignUp: UILabel!
     @IBOutlet weak var tfAddress: UITextField!
-    
+    @IBOutlet weak var btnRegister: UIButton!
     var strType:String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        setLocalization()
         // Do any additional setup after loading the view.
     }
     
+    func setLocalization(){
+        self.tfEmail.placeholder = L10n.email
+        self.tfPassword.placeholder = L10n.password
+        self.tfUserName.placeholder = L10n.username
+        self.tfMobile.placeholder = L10n.mobileNumber
+        self.tfAddress.placeholder = L10n.address
+        
+        self.lblSignUp.text = L10n.signUp
+        self.btnRegister.setLocalizedTitle(L10n.register)
+    }
 
     @IBAction func btnOnBack(_ sender: Any) {
         self.onBackPressed()
@@ -42,38 +54,38 @@ extension SignUpViewController {
 
         // Username
         guard let name = tfUserName.text, !name.isEmpty else {
-            objAlert.showAlert(message: "Please enter your name.", title: "Alert", controller: self)
+            objAlert.showAlert(message: L10n.enterYourName, title: "", controller: self)
             return false
         }
 
         // Email
         guard let email = tfEmail.text, !email.isEmpty else {
-            objAlert.showAlert(message: "Please enter your email.", title: "Alert", controller: self)
+            objAlert.showAlert(message: L10n.enterYourEmail, title: "Alert", controller: self)
             return false
         }
 
         if !isValidEmail(email) {
-            objAlert.showAlert(message: "Please enter a valid email.", title: "Alert", controller: self)
+            objAlert.showAlert(message: L10n.enterYourEmail, title: "Alert", controller: self)
             return false
         }
 
         // Mobile
         guard let mobile = tfMobile.text, !mobile.isEmpty else {
-            objAlert.showAlert(message: "Please enter mobile number.", title: "Alert", controller: self)
+            objAlert.showAlert(message: L10n.enterYourMobile, title: "Alert", controller: self)
             return false
         }
 
 
         // Password
         guard let password = tfPassword.text, !password.isEmpty else {
-            objAlert.showAlert(message: "Please enter password.", title: "Alert", controller: self)
+            objAlert.showAlert(message: L10n.enterYourPassword, title: "Alert", controller: self)
             return false
         }
 
 
         // Address
         guard let address = tfAddress.text, !address.isEmpty else {
-            objAlert.showAlert(message: "Please enter address.", title: "Alert", controller: self)
+            objAlert.showAlert(message: L10n.enterYourAddress, title: "Alert", controller: self)
             return false
         }
 

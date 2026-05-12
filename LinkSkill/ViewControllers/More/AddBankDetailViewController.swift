@@ -15,7 +15,14 @@ class AddBankDetailViewController: UIViewController {
     @IBOutlet weak var tfIFSCCode: UITextField!
     @IBOutlet weak var subVw: UIView!
     @IBOutlet weak var lblText: UILabel!
+    @IBOutlet weak var lblHeading: UILabel!
     @IBOutlet weak var tfEnterAmount: UITextField!
+    @IBOutlet weak var lblBankName: UILabel!
+    @IBOutlet weak var lblAccHolderName: UILabel!
+    @IBOutlet weak var lblAccNumber: UILabel!
+    @IBOutlet weak var btnWithdrawl: UIButton!
+    @IBOutlet weak var lblIfsc: UILabel!
+    @IBOutlet weak var btnComplete: UIButton!
     
     var strAmount = ""
     
@@ -24,7 +31,21 @@ class AddBankDetailViewController: UIViewController {
         self.subVw.isHidden = true
         call_WebService_GetBankDetails()
         
-        self.lblText.text = "You have \(self.strAmount) in you wallet. Please enter amount you want to transfer in your account"
+        self.lblText.text = "\(L10n.you_have) \(self.strAmount) \(L10n.usd_in_your_wallet_n_nplease_enter_amount_you_want_to_transfer_in_your_account)"
+        
+        self.lblBankName.text = L10n.bankName
+        self.lblAccHolderName.text = L10n.accountHolderName
+        self.lblAccNumber.text = L10n.accountNumber
+        self.lblIfsc.text = L10n.ifscCode
+        self.lblHeading.text = L10n.addBankDetail
+        
+        self.tfAccountNumber.placeholder = L10n.enterAccountNumber
+        self.tfBankName.placeholder = L10n.enterBankName
+        self.tfAccountNumber.placeholder = L10n.enterAccountNumber
+        self.tfIFSCCode.placeholder = L10n.enterIfscCode
+        
+        self.btnComplete.setLocalizedTitle(L10n.complete)
+        self.btnWithdrawl.setLocalizedTitle(L10n.withdrawl)
     }
     
 

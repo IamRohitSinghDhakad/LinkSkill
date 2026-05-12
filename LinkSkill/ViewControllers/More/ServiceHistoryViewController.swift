@@ -13,11 +13,19 @@ class ServiceHistoryViewController: UIViewController {
     @IBOutlet weak var vwAccepted: UIView!
     @IBOutlet weak var vwCompleted: UIView!
     @IBOutlet weak var tblVw: UITableView!
+    @IBOutlet weak var btnAccepted: UIButton!
+    @IBOutlet weak var btnCompleted: UIButton!
     
     var arrJobs = [JobsModel]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.lblHeader.text = L10n.service_history
+        self.btnAccepted.setLocalizedTitle(L10n.accepted)
+        self.btnCompleted.setLocalizedTitle(L10n.completed)
+        
+        
         self.lblHeader.applyStyle(AppFonts.title)
         self.vwAccepted.backgroundColor = UIColor(named: "AppColor")?.withAlphaComponent(1.0)   // Full color
         self.vwCompleted.backgroundColor = UIColor(named: "AppColor")?.withAlphaComponent(0.5)  // 50% opacity
@@ -43,14 +51,14 @@ class ServiceHistoryViewController: UIViewController {
     }
     
     @IBAction func btnAccepted(_ sender: Any) {
-        vwAccepted.backgroundColor = UIColor(named: "AppColor")?.withAlphaComponent(1.0)   // Full color
-        vwCompleted.backgroundColor = UIColor(named: "AppColor")?.withAlphaComponent(0.5)  // 50% opacity
+        vwAccepted.backgroundColor = UIColor(named: "AppColor")?.withAlphaComponent(1.0)
+        vwCompleted.backgroundColor = UIColor(named: "AppColor")?.withAlphaComponent(0.5)  
         call_WebService_ServiceHistory(strStatus: "Accepted,Awarded")
     }
     
     @IBAction func btnCompleted(_ sender: Any) {
-        vwAccepted.backgroundColor = UIColor(named: "AppColor")?.withAlphaComponent(0.5)   // 50% opacity
-        vwCompleted.backgroundColor = UIColor(named: "AppColor")?.withAlphaComponent(1.0)  // Full color
+        vwAccepted.backgroundColor = UIColor(named: "AppColor")?.withAlphaComponent(0.5)
+        vwCompleted.backgroundColor = UIColor(named: "AppColor")?.withAlphaComponent(1.0)
         call_WebService_ServiceHistory(strStatus: "Completed")
     }
     

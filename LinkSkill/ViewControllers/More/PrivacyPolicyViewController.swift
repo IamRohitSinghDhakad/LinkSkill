@@ -11,13 +11,12 @@ import WebKit
 class PrivacyPolicyViewController: UIViewController {
 
     @IBOutlet weak var webVw: WKWebView!
+    @IBOutlet weak var lblHeading: UILabel!
     
     var isComingfrom = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //self.lblHeadingTitle.text = self.isComingfrom
         
         self.webVw.navigationDelegate = self
         self.webVw.uiDelegate = self
@@ -25,14 +24,15 @@ class PrivacyPolicyViewController: UIViewController {
         var loadUrl = ""
         switch isComingfrom {
         case "Privacy Policy":
+            self.lblHeading.text = L10n.privacyPolicy
             loadUrl = WsUrl.url_PrivacyPolicy
         case "Terms":
+            self.lblHeading.text = L10n.termsConditions
             loadUrl = WsUrl.url_Terms
         default:
             break
         }
         
-        // Do any additional setup after loading the view.
         if let url = URL(string: BASE_URL + loadUrl) {
             print(url)
             

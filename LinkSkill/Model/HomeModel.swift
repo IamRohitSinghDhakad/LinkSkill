@@ -30,6 +30,7 @@ class JobsModel: NSObject {
     var strRating :Double?
     var strReview: String?
     var isSelected: Bool = false
+    var isShowPayment: Bool = false
     
     init(from dictionary: [String: Any]) {
         super.init()
@@ -53,6 +54,15 @@ class JobsModel: NSObject {
             categoryName = value
         } else {
             categoryName = ""
+        }
+        
+        if let value = dictionary["isShowPayment"] as? Int {
+            if value == 0{
+                self.isShowPayment = false
+            }else{
+                self.isShowPayment = true
+            }
+            
         }
         
         // MARK: - Details
